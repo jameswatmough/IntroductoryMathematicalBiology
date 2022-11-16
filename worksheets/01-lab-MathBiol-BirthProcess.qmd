@@ -1,9 +1,11 @@
 ---
-geometry: margin=1in
-output: pdf_document
+title: The GillespieSSA routines
+jupyter:
+  kernelspec:
+    display_name: R
+    language: R
+    name: ir
 ---
-
-# The GillespieSSA routines
 
 ## Initial set up
 
