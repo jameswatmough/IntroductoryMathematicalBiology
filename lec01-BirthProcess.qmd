@@ -1,0 +1,156 @@
+---
+author: James  Watmough
+date: "`r Sys.Date()`"
+---
+
+{{< include texmacros.qmd >}}
+
+# The Simple Death Process {#sec-deathprocess}
+
+The simple death process is the basis for most of the models we will develop.  We suppose an entity can be in one of two states.  For example,  an organism may be alive or dead; an ion channel may be open or closed; an egg, deposited at some time in the past, may have hatched, or not.
+
+## A single individual
+
+Let $X(t)$ be a random variable denoting the state of a given organism at time $t$, with one indicating alive and zero dead. 
+
+The main assumptions of the simple death process are as follows: 
+
+1. at any time, the individual is in one of two possible states, alive (1) or dead (0);
+2. if an individual is alive at time $t$, the probability of that individual tying before time $t+\tau$ is proportional to the waiting time $\tau$ and independent of $t$.
+
+We express these assumptions precisely with statements about conditional probabilities.  For every interval $[t,t+\tau]$, with $t$ and $\tau$ nonnegative, we assume that 
+$$\condprob{ X(t+\tau)=0 }{ X(t)=1 } = \mu\tau + o(\tau).$$ {#eq-cond-prob-death}
+
+*Little-o*, $o(\tau)$, is 
+a mathematical shorthand for negligible.   Technically, we say a function, $f(\tau)$ is $o(\tau^k)$ if $\displaystyle\lim_{t\to0} \dfrac{f(\tau)}{\tau^k} = 0$.  That is, $f$ goes to zero faster than $\tau^k$.
+
+## Event times
+Consider again a single individual alive at time zero, and let $T$ be the random variable denoting the time the individual dies.  From [@eq-cond-prob-death], we know that the probability the organism dies between times $t$ and $t+\tau$ must be
+$$\condprob{ T\in (t,t+\tau] }{ T>t } = \mu\tau + o(\tau).$$
+From the definition of conditional probability and the fact that $\prob{T>t}$ is a nonincreasing function of $t$, we know that
+$$\condprob{ T\in (t,t+\tau] }{ T>t } = \frac{\prob{T>t} - \prob{T>t+\tau}}{\prob{T>t}}.$$
+Equating the two expressions leads to 
+\begin{align*}
+  \frac{\prob{T>t} - \prob{T>t+\tau}}{\prob{T>t}} &= \mu\tau + o(\tau) \\
+  \frac{\prob{T>t} - \prob{T>t+\tau}}{\tau} &= \mu \prob{T>t} + \frac{o(\tau)}{\tau} 
+\end{align*}
+Finally, taking a limit as $\tau\to0$ leads us to a differential equation for $\prob{T>t}$.
+$$\frac{d}{dt}\prob{T>t} = - \lim_{\tau\to0}\frac{\prob{T>t} - \prob{T>t+\tau}}{\tau} = - \mu \prob{T>t}$$
+Solving this equation with the initial condition $\prob{T>0}=1$, we find that 
+$$\prob{T>t} = \exp\left(-\displaystyle\int_0^t \mu(s)\, ds\right).$$
+If the switching rate is constant, then $\prob{T>t} = e^{-\mu t}$.  That is, $T$ has an exponential distribution with rate $\mu$.
+
+This exponential distribution of event times, sometimes called sojourn times, persists across many compartmental models.  The assumption that the mortality rate, $\mu$, is constant and does not depend on time or any aspects of the individual, such as age, implies an exponential distribution of event times with its skew towards short times.
+
+::: {#exr-exponential-mean}
+Show that the mean of the exponential distribution with rate $\mu$ is $\frac{1}{\mu}$ and hence $\mu$ is the reciprocal of the life expectancy.
+:::
+
+::: {#exr-exponential-quartile}
+Compute the 10th and 90th percentiles of an exponential distribution with rate $\mu$.
+That is, find the times $q$ for which $\prob{T<q} \in \{0.1,0.9\}$
+:::
+
+::: {.callout-solution collapse=true}
+$$\prob{T<q} = 1 - \prob{T>q} = 1 - e^{-\mu q}$$
+Setting this to $p$ and solving for $q$ in terms of $p$ leads to 
+$$q = -\frac{1}{\mu}\log p$$
+For $p= 0.1$,  we find $q\approx\frac{2.3}{\mu}$, and for $p=0.9$, we find $q\approx\frac{0.1}{\mu}$.  In other words,  10% of individuals survive at least twice as long as the mean, and 10% die before reaching one tenth the mean age.
+:::
+
+# The Simple Birth Process
+
+As a simple starting point, consider a simple population whose individuals 
+
+1. do not die,
+2. do not interact,
+3. all give birth at the same rate.
+
+Let  $N(t)$ be a random variable denoting the population at time $t$, and 
+  let $p_n(t)$ be the probability that $N(t) = n$, where $n\in\{0,1,2,\dots\}$.
+We will take time to be continuous. 
+Assume that
+the probability that any individual gives birth during the short time interval $(t,t+\tau)$ is independent of $t$ and proportional to $\tau$ and that the probability of
+two births occurring in the same interval is $o(\tau)$.
+
+## A single individual
+
+Thus, in a population of a single individual,
+\begin{align*}
+	\prob{\text{exactly 1 birth in $[t,t+\tau]$}} &= b\tau + o(\tau), \\
+	\prob{\text{more than 1 birth in $[t,t+\tau]$}} &= o(\tau), \\
+	\prob{\text{no births in $[t,t+\tau]$}} &= 1 - b\tau + o(\tau), \\
+\end{align*}
+
+Let $p_n(t)$ be the probability the individual has $n$ offspring in the interval $(0,t)$.   From the transition probabilities specified above, 
+\begin{align*}
+  p_{n}(t+\tau) &= \left(1 - b\tau + o(\tau)\right)p_{n}(t) + \left(b\tau + o(\tau)\right)p_{n-1}(t), \quad n\in{1,2,\dots} \\
+  p_0(t+\tau)   &= \left(1 - b\tau + o(\tau)\right)p_{n}(t), \quad n = 0.
+\end{align*}
+
+Rearranging the terms and taking a limit as $\tau\to0$ leads to the following system of differential equations:
+\begin{align*}
+  \frac{d}{dt}p_n(t) &= -b p_{n}(t) + b p_{n-1}(t), \quad n>0, \\
+  \frac{d}{dt}p_0(t) &= -b p_{0}(t). \\
+\end{align*}
+
+::: {#exr-birthprocess-1}
+Show that the solution to the above system of differential equations with $p_0(0)=1$ and $p_n(0) = 0$, $n\in\{1,2,3,\dots\}$ is $$p_n(t) = \frac{(b t)^ne^{-b t}}{n!}.$$
+:::
+
+By the above exercise,  the assumption that the probability of a birth in a short interval of time is proportional to the length of the interval leads to the births having a Poisson distribution with rate $bt$.  
+
+Now let $T(t)$ be the probability that the next birth event happens within a time $t$.  That is, $T$ is the c.d.f.\ for  the inter-event times.  This is simply the probability there is at least one birth in the interval $(0,t)$, thus, $T(t) = 1-p_0(t) = 1-e^{bt}$.   This connection between the exponential and Poisson distributions will turn out to be useful in modelling and simulation.
+
+## Many individuals
+
+In a population of a $n$ individuals,
+\begin{align*}
+  \hbox{Pr}\{\hbox{1 birth in $[t,t+\tau]$}\} &= nb\tau(1-b\tau)^{n-1} = nb\tau + o(\tau), \\
+  \hbox{Pr}\{\hbox{more than 1 birth in $[t,t+\tau]$}\} &= \begin{pmatrix} n\\m \end{pmatrix}(b\tau)^m(1-b\tau)^{n-m} = o(\tau), \\
+  \hbox{Pr}\{\hbox{no births in $[t,t+\tau]$}\} &= 1 - nb\tau + o(\tau), 
+\end{align*}
+
+
+
+### The ODE for the mean
+
+The *master equation* for the process relates the probabilities at each time step.
+\begin{align*}
+  p_n(t+\tau) &= p_{n-1}(t)\cdot\hbox{Pr}\{\hbox{1 birth in $[t,t+\tau]$}\}+p_n(t)\cdot\hbox{Pr}\{\hbox{no births in $[t,t+\tau]$}\} \\
+              &= p_{n-1}(t)(n-1)b\tau + p_n(t)(1-bn\tau)+o(\tau)
+\end{align*}
+Rearranging the master equation yields
+\begin{equation*}
+  \frac{1}{\tau}\left(p_n(t+\tau)-p_n(t)\right) = b\left((n-1)p_{n-1}(t)-np_n(t) \right)
+\end{equation*}
+
+Taking a limit leads to a sequence of ODEs,
+\begin{equation*}
+  \frac{d}{dt}p_n(t) = b\left((n-1)p_{n-1}(t)-np_n(t) \right), \quad n\in\{n_0,n_0+1,\dots, \quad P_{n_0-1}=0\},
+\end{equation*}
+with initial conditions
+$$p_n(0) = \begin{cases} 1 & \text{if $n=n_0$,} \\ 0 & \text{otherwise.} \end{cases}$$
+
+A  differential equation for the mean and variance of the process can be derived from the above system.
+
+\begin{align*}
+  \frac{dM_1}{dt} = \sum_{n=1}^\infty n\dot{p}_n &= \sum_{n=1}^\infty bn\left ( n-1)p_{n-1} - np_n\right) \\
+         &= b\sum_{n=0}^\infty \left( (n+1)np_n - n^2p_n \right) \\
+         &= b\sum_{n=1}^\infty np_n  \\
+	 &= bM_1
+\end{align*}
+with the initial condition $M_1(0) = n_0$.  
+This equation has the solution
+$$M_1(t) = n_0e^{bt}$$
+
+\begin{align*}
+  \frac{d\sigma^2}{dt} = \dfrac{d}{dt}\left(M_2-M_1^2\right) &= \sum_{n=1}^\infty n^2\dot{p}_n - 2M_1\frac{dM_1}{dt} \\
+      &= \sum_{n=1}^\infty bn^2\left((n-1)p_{n-1}(t) - np_n(t)\right) - 2bM_1^2 \\
+      &= \sum_{n=1}^\infty b\left((n+1)^2np_{n}(t) - n^3p_n(t)\right) - 2bM_1^2 \\
+      &= \sum_{n=1}^\infty b\left((2n^2+n)p_{n}(t) \right) - 2bM_1^2 \\
+      &= b\left(2M_2+M_1  - 2M_1^2\right) \\
+      &= 2b\sigma^2+bM_1 
+\end{align*}
+The initial conditions are $\sigma^2(0)=0$ and $M_1(0)=0$, which leads to the solution
+$$\sigma^2(t) = n_0e^{bt}(e^{bt}-1)$$

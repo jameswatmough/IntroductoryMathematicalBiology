@@ -1,0 +1,27 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "Introduction to Mathematical Ecology"
+  author: "James Watmough"
+  date: "2023-01-14"
+  chapters:
+    - index.qmd
+    - lec01-BirthProcess.qmd
+    - 00-lab-R-intro.qmd
+    - 01-lab-BirthProcess.qmd
+
+bibliography: M4563Lectures.bib
+
+format:
+  html:
+    code-fold: true
+    code-summary: "Show the code"
+    theme: cosmo
+  pdf:
+    documentclass: lecturenotes-md
+
+
+
+

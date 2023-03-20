@@ -1,0 +1,73 @@
+
+```{r}
+library(GillespieSSA2)
+library(ggplot2)
+```
+
+# SIVD model without delay
+
+## The ODE model
+
+\begin{align}
+	\dot{S} &= \lambda\left(1-\frac{S(t)+I(t)+D(t)}{S_{\text{max}}}\right)S(t)-\beta S(t)V(t),
+  \label{SIVD-SJ}\\[3pt]
+  \dot{I} &= \beta S(t-\tau)V(t-\tau)-d_I I(t),
+  \label{SIVD-IJ}\\[3pt]
+      \dot{V} &= pI(t)-d_V V(t),
+  \label{SIVD-VJ}\\[3pt]
+  \dot{D} &= d_I I(t)-d_D D(t).
+  \label{SIVD-DJ}
+\end{align}
+
+The first term models the net growth of susceptible cells.
+This term needs to be decomposed into a nonnegative mitosis rate less a death rate.
+
+```{r}
+
+initial_state <- c(
+  S = 1000,
+	I = 0,
+	V = 30,
+	D = 0,
+	VI = 29,
+	Vmax = 10
+	)
+params <- c(
+  b = 1,
+	d=.2,
+	Smax = 1000,
+	beta1 = 0.15,
+	beta2 = 1.6,
+	p = 0.05,
+	dV = 5,
+	dI = 0.5,
+	dD = 1
+	)
+
+birth_rate ="b*S" 
+death_rate ="d*S+(b-d)*S*(S+I+D)/Smax" 
+reactions <- list(
+# propensity function           effects                    name for reaction
+ reaction(birth_rate,          c(S = +1),                 "birth"),
+ reaction(death_rate,          c(S = -1),                 "death"),
+  reaction("beta1*S*V",         c(S = -1, I = +1, V = -1), "infection"),
+  reaction("dI*I",              c(I = -1, D = +1, VI = -1),"infected_cell_death"),
+  reaction("(beta2-beta1)*S*V", c(V = -1, VI = -1, Vmax=+1),"virus_binding"),
+  reaction("p*I",               c(V = +1, VI = +1, Vmax=-1),"viral_budding"),
+  reaction("dV*V",              c(V = -1, VI = -1, Vmax=+1),"viral_clearance"),
+  reaction("dD*D",              c(D = -1),       "dead_cell_clearance")         
+)
+
+out <-
+  ssa(
+    initial_state = initial_state,
+    reactions = reactions,
+    params = params,
+    method = ssa_exact(),
+    final_time = 100,
+    census_interval = 0,
+    verbose = TRUE,
+		log_propensity = TRUE
+  )
+
+```

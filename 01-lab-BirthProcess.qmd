@@ -1,6 +1,4 @@
----
-title: The GillespieSSA routines
----
+# The GillespieSSA routines
 
 ## Initial set up
 
