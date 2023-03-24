@@ -177,6 +177,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <a href="./01-lab-BirthProcess.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The GillespieSSA routines</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-lab-SDE.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">The stochastic difference equations and analogous deterministic equations</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -199,7 +204,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to R</span></h1>
+<h1 class="title"><span id="sec-lab-intro-to-R" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to R</span></span></h1>
 </div>
 
 
@@ -292,11 +297,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1] [,2] [,3] [,4] [,5]
 [1,]   20   20   20   20   20
-[2,]   23   24   24   23   24
-[3,]   27   28   30   28   27
-[4,]   35   35   39   36   32
-[5,]   43   42   46   43   39
-[6,]   58   51   54   57   43</code></pre>
+[2,]   25   22   25   21   22
+[3,]   29   24   31   27   27
+[4,]   33   28   40   33   32
+[5,]   41   34   44   37   35
+[6,]   49   47   59   45   43</code></pre>
 </div>
 </div>
 <p>This is all very nice, but for larger simulations, it just won’t do to look at the matrix of numbers. We need some plots. Here are a few useful ones to start with</p>
@@ -526,7 +531,7 @@ You can try the <code>lines</code> or <code>curves</code> functions. For example
 <pre><code>'data.frame':   20000 obs. of  3 variables:
  $ time      : int  1 2 3 4 5 6 7 8 9 10 ...
  $ run       : Factor w/ 20 levels "1","2","3","4",..: 1 1 1 1 1 1 1 1 1 1 ...
- $ population: num  2 2 2 2 2 2 2 2 2 2 ...</code></pre>
+ $ population: num  2 2 2 2 2 2 2 2 3 3 ...</code></pre>
 </div>
 </div>
 <p>If this is your fist use of ggplot you may need to install the package. Use Rstudio’s graphical interface, or try <code>install.packages("ggplot2")</code> if you aren’t using a fancy interface.</p>

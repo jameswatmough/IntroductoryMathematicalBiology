@@ -1,1 +1,8 @@
 # Introduction to Mathematical Ecology {.unnumbered}
+
+
+These pages contain lecture notes, lab worksheets, and exercises for Mathematical Ecology.
+
+My first lecture for the 3MC school on Mathematical Modelling in Biology covered material in [@sec-deathprocess] and the labs on R [@sec-lab-intro-to-R] and the GillespieSSA routines [@sec-lab-GillespieSSA].
+
+The pdf presentation for my second and third lectures can be found [here](SASchool-II.pdf)

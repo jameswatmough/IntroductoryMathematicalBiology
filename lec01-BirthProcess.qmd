@@ -16,7 +16,7 @@ Let $X(t)$ be a random variable denoting the state of a given organism at time $
 The main assumptions of the simple death process are as follows: 
 
 1. at any time, the individual is in one of two possible states, alive (1) or dead (0);
-2. if an individual is alive at time $t$, the probability of that individual tying before time $t+\tau$ is proportional to the waiting time $\tau$ and independent of $t$.
+2. if an individual is alive at time $t$, the probability of that individual dying before time $t+\tau$ is proportional to the waiting time $\tau$ and independent of $t$.
 
 We express these assumptions precisely with statements about conditional probabilities.  For every interval $[t,t+\tau]$, with $t$ and $\tau$ nonnegative, we assume that 
 $$\condprob{ X(t+\tau)=0 }{ X(t)=1 } = \mu\tau + o(\tau).$$ {#eq-cond-prob-death}

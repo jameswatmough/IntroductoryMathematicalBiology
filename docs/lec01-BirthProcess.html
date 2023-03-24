@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="James Watmough">
-<meta name="dcterms.date" content="2023-03-20">
+<meta name="dcterms.date" content="2023-03-24">
 
 <title>Introduction to Mathematical Ecology - 1&nbsp; The Simple Death Process</title>
 <style>
@@ -116,6 +116,11 @@ ul.task-list li input[type="checkbox"] {
   <a href="./01-lab-BirthProcess.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The GillespieSSA routines</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-lab-SDE.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">The stochastic difference equations and analogous deterministic equations</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -160,7 +165,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">March 20, 2023</p>
+      <p class="date">March 24, 2023</p>
     </div>
   </div>
   
@@ -177,7 +182,7 @@ ul.task-list li input[type="checkbox"] {
 <p>The main assumptions of the simple death process are as follows:</p>
 <ol type="1">
 <li>at any time, the individual is in one of two possible states, alive (1) or dead (0);</li>
-<li>if an individual is alive at time <span class="math inline">\(t\)</span>, the probability of that individual tying before time <span class="math inline">\(t+\tau\)</span> is proportional to the waiting time <span class="math inline">\(\tau\)</span> and independent of <span class="math inline">\(t\)</span>.</li>
+<li>if an individual is alive at time <span class="math inline">\(t\)</span>, the probability of that individual dying before time <span class="math inline">\(t+\tau\)</span> is proportional to the waiting time <span class="math inline">\(\tau\)</span> and independent of <span class="math inline">\(t\)</span>.</li>
 </ol>
 <p>We express these assumptions precisely with statements about conditional probabilities. For every interval <span class="math inline">\([t,t+\tau]\)</span>, with <span class="math inline">\(t\)</span> and <span class="math inline">\(\tau\)</span> nonnegative, we assume that <span id="eq-cond-prob-death"><span class="math display">\[\text{Pr}\left(\  X(t+\tau)=0  \ \mid\  X(t)=1 \ \right) = \mu\tau + o(\tau). \tag{1.1}\]</span></span></p>
 <p><em>Little-o</em>, <span class="math inline">\(o(\tau)\)</span>, is a mathematical shorthand for negligible. Technically, we say a function, <span class="math inline">\(f(\tau)\)</span> is <span class="math inline">\(o(\tau^k)\)</span> if <span class="math inline">\(\displaystyle\lim_{t\to0} \dfrac{f(\tau)}{\tau^k} = 0\)</span>. That is, <span class="math inline">\(f\)</span> goes to zero faster than <span class="math inline">\(\tau^k\)</span>.</p>

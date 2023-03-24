@@ -93,6 +93,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./02-lab-SDE.html" rel="next">
 <link href="./00-lab-R-intro.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -176,6 +177,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <a href="./01-lab-BirthProcess.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The GillespieSSA routines</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-lab-SDE.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">The stochastic difference equations and analogous deterministic equations</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -197,7 +203,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The GillespieSSA routines</span></h1>
+<h1 class="title"><span id="sec-lab-GillespieSSA" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The GillespieSSA routines</span></span></h1>
 </div>
 
 
@@ -438,11 +444,11 @@ SSA finished!</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>         time prey predator run
 1 0.000000000 1000     1000   1
-2 0.001127192 1003      997   1
-3 0.002015448 1006     1002   1
-4 0.003008683 1006     1000   1
-5 0.004008728 1008      993   1
-6 0.005120614 1018      990   1</code></pre>
+2 0.001009586 1005      992   1
+3 0.002021041 1008      989   1
+4 0.003011730 1010      987   1
+5 0.004022904 1010      983   1
+6 0.005017585 1009      982   1</code></pre>
 </div>
 <details>
 <summary>Show the code</summary>
@@ -452,11 +458,11 @@ SSA finished!</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>         time run  species population
 1 0.000000000   1 predator       1000
-2 0.001127192   1 predator        997
-3 0.002015448   1 predator       1002
-4 0.003008683   1 predator       1000
-5 0.004008728   1 predator        993
-6 0.005120614   1 predator        990</code></pre>
+2 0.001009586   1 predator        992
+3 0.002021041   1 predator        989
+4 0.003011730   1 predator        987
+5 0.004022904   1 predator        983
+6 0.005017585   1 predator        982</code></pre>
 </div>
 </div>
 <p>The second and third inputs of <code>gather</code> are the column names for the long format, and the fourth input is the range of columns from the <strong>wide</strong> data frame (<code>res_pred_prey</code>) to reshape.</p>
@@ -630,6 +636,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./02-lab-SDE.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">The stochastic difference equations and analogous deterministic equations</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

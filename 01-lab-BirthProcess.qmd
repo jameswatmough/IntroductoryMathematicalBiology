@@ -1,4 +1,4 @@
-# The GillespieSSA routines
+# The GillespieSSA routines {#sec-lab-GillespieSSA}
 
 ## Initial set up
 

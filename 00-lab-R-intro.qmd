@@ -1,4 +1,4 @@
-# Introduction to R
+# Introduction to R {#sec-lab-intro-to-R}
 
 We will use R for demonstrations in class,  but you are free to use python, matlab or julia if you wish.
 

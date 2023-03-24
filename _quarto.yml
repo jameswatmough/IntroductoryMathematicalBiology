@@ -11,6 +11,7 @@ book:
     - lec01-BirthProcess.qmd
     - 00-lab-R-intro.qmd
     - 01-lab-BirthProcess.qmd
+    - 02-lab-SDE.qmd
 
 bibliography: M4563Lectures.bib
 
