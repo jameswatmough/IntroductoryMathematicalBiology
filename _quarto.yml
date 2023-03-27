@@ -23,6 +23,9 @@ format:
   pdf:
     documentclass: lecturenotes-md
 
+execute:
+  cache: true
+
 
 
 

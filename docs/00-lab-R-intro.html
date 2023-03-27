@@ -238,7 +238,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="simulating-a-simple-stochastic-process" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="simulating-a-simple-stochastic-process"><span class="header-section-number">2.3</span> Simulating a simple stochastic process</h2>
 <p>To start, we will use R to generate some sample paths from a simple stochastic process. Let <span class="math inline">\(N(t)\)</span> be the number of individuals in the population at time <span class="math inline">\(t\)</span>, <span class="math inline">\(t\in\{0,1,\dots\}\)</span>, and suppose in any given time step, any given individual will give birth with probability <span class="math inline">\(b\)</span>. We will need a vector to store our resulting populations, and we should specify the length of this vector in advance. We also need some initial population, say <span class="math inline">\(N(0) = N_0\)</span>. First, set up a vector to hold the results.</p>
-<div class="cell">
+<div class="cell" data-hash="00-lab-R-intro_cache/html/unnamed-chunk-1_a19127503ba17bd0ee2e16d972264436">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>T <span class="ot">=</span> <span class="dv">10</span></span>
@@ -248,14 +248,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p><code>rep</code> stands for replicate. The result is a vector of zeros of length <span class="math inline">\(T\)</span>.</p>
 <p>Next, initialize the first entry of <span class="math inline">\(N\)</span> with initial value for the simulation.</p>
-<div class="cell">
+<div class="cell" data-hash="00-lab-R-intro_cache/html/unnamed-chunk-2_bf33fa4d7cc7559a003a4e5e96f55113">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>N[<span class="dv">1</span>] <span class="ot">=</span> No</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>We next want to generate some births. Since we’ve assumed all individuals are reproducing independently, we model the number of births in the first time interval by a binomial distribution with parameters <span class="math inline">\(N\)</span> and <span class="math inline">\(b\)</span>. We assign a value to <span class="math inline">\(b\)</span> and then use R’s <code>rbinom</code> command.</p>
-<div class="cell">
+<div class="cell" data-hash="00-lab-R-intro_cache/html/unnamed-chunk-3_fac131f96bc2c530c8b508a773e5ce86">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>b <span class="ot">=</span> .<span class="dv">2</span></span>
@@ -263,7 +263,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </details>
 </div>
 <p>To repeat this for the rest of the times, we set up a loop.</p>
-<div class="cell">
+<div class="cell" data-hash="00-lab-R-intro_cache/html/unnamed-chunk-4_42b5a141e152f092c841693c6d027e3a">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (t <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(T<span class="dv">-1</span>)) {</span>
@@ -272,7 +272,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </details>
 </div>
 <p>R is built to work with vectors. It is just as easy, and surprisingly, almost as quick to generate many many sample paths as it is to generate one. To store the results, we set up a matrix with <span class="math inline">\(S\)</span> columns, where <span class="math inline">\(S\)</span> is the number of sample paths. The resulting code is as follows.</p>
-<div class="cell">
+<div class="cell" data-hash="00-lab-R-intro_cache/html/unnamed-chunk-5_92ad6f3eba5920d350be6cf9a2724b31">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a> T <span class="ot">=</span> <span class="dv">10</span></span>
@@ -289,7 +289,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The fourth line initializes the first row of the matrix with initial values for the simulations. Note the slight difference from matlab’s notation.</p>
 <p>Notice the first argument to <code>rbinom</code> is the number of times we sample the binomial distribution.</p>
 <p>If you type <code>N</code> again, you will see that the numbers increase as you move down the columns of the matrix. Each column represents on sample path of our simulation.</p>
-<div class="cell">
+<div class="cell" data-hash="00-lab-R-intro_cache/html/unnamed-chunk-6_b7fd53d2981e07fca0babbe6c9525d43">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(N)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -297,11 +297,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1] [,2] [,3] [,4] [,5]
 [1,]   20   20   20   20   20
-[2,]   25   22   25   21   22
-[3,]   29   24   31   27   27
-[4,]   33   28   40   33   32
-[5,]   41   34   44   37   35
-[6,]   49   47   59   45   43</code></pre>
+[2,]   26   22   23   25   24
+[3,]   32   26   27   29   30
+[4,]   38   34   37   35   36
+[5,]   48   44   41   43   43
+[6,]   61   52   49   51   53</code></pre>
 </div>
 </div>
 <p>This is all very nice, but for larger simulations, it just won’t do to look at the matrix of numbers. We need some plots. Here are a few useful ones to start with</p>
@@ -309,7 +309,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>plot the first column against the row number <code>plot(N[,1])</code></p></li>
 <li><p>add some axis labels and a nice title</p></li>
 </ul>
-<div class="cell">
+<div class="cell" data-hash="00-lab-R-intro_cache/html/unnamed-chunk-7_1024eac9f686edb053e6df2609a8dc03">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(N[,<span class="dv">1</span>], </span>
@@ -324,7 +324,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li>it is also possible to add the title and labels after creating the plot:</li>
 </ul>
-<div class="cell">
+<div class="cell" data-hash="00-lab-R-intro_cache/html/unnamed-chunk-8_8bacc2415da392b7165d6c29494760ed">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(N[,<span class="dv">1</span>],<span class="at">ann=</span><span class="cn">FALSE</span>) </span>
@@ -340,7 +340,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li>of course you might have noticed that the time axis isn’t really the time, it is the index of the row. What we really want is to start at t=0. What we can do is set up a vector <code>times</code> that contains the times corresponding to each index and pass that to the plot routine. In this case this is just a shift down by 1.</li>
 </ul>
-<div class="cell">
+<div class="cell" data-hash="00-lab-R-intro_cache/html/unnamed-chunk-9_9b2f9a90fffd2b298a420e1bd47dbb01">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>times <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span>T <span class="sc">-</span> <span class="dv">1</span></span>
@@ -356,7 +356,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li>plot all the columns on a single plot</li>
 </ul>
-<div class="cell">
+<div class="cell" data-hash="00-lab-R-intro_cache/html/unnamed-chunk-10_b268b6897d318a79efd405eaf085e614">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(times,N,<span class="at">ann=</span><span class="cn">FALSE</span>)</span>
@@ -371,7 +371,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li>plot the first, third and fifth columns on a single plot</li>
 </ul>
-<div class="cell">
+<div class="cell" data-hash="00-lab-R-intro_cache/html/unnamed-chunk-11_921f222b1655ae59dd01b5ff8914ac73">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(times,N[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>)],<span class="at">ann=</span><span class="cn">FALSE</span>)</span>
@@ -385,7 +385,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>These values for the initial population and the probability of a birth in unit time are both too high for longer simulations. Change them to something more reasonable, and rerun the code with larger <code>S</code> and <code>T</code>, say 20 and 1000.</p>
 <p>But wait, we don’t want to be typing everything in again every time we change parameters. That’s just crazy. What we do is wrap the whole thing up as a function and put it in a script. Save the following as a file, call it <code>birthprocess.R</code>, or whatever you like.</p>
-<div class="cell">
+<div class="cell" data-hash="00-lab-R-intro_cache/html/unnamed-chunk-12_956070ccbabf7ed3ccf9539faebecdb3">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>birthprocess <span class="ot">=</span> <span class="cf">function</span>(<span class="at">b =</span> <span class="fl">0.01</span>, <span class="at">No =</span> <span class="dv">2</span>, <span class="at">T =</span> <span class="dv">200</span>, <span class="at">S =</span> <span class="dv">10</span>) {</span>
@@ -402,7 +402,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>To source our script from a prompt, enter <code>source("birthprocess.R")</code></p>
 <p>You may need to explore your filesystem to learn where you saved the file to. Use the command <code>getwd()</code> to find out what your working directory is.</p>
 <p>To call our function and assign the results to the matrix <code>N</code> we enter the following at the prompt</p>
-<div class="cell">
+<div class="cell" data-hash="00-lab-R-intro_cache/html/unnamed-chunk-13_d716c780899d99603ea9dfa3c850e648">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>N <span class="ot">=</span> <span class="fu">birthprocess</span>(<span class="at">b=</span><span class="fl">0.02</span>,<span class="at">No=</span><span class="dv">2</span>,<span class="at">T=</span><span class="dv">1000</span>,<span class="at">S=</span><span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -413,7 +413,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="prettier-plots-with-rs-basic-plot-functions" class="level2" data-number="2.4">
 <h2 data-number="2.4" class="anchored" data-anchor-id="prettier-plots-with-rs-basic-plot-functions"><span class="header-section-number">2.4</span> prettier plots (with R’s basic plot functions)</h2>
 <p>If we want to put more than two or three sample paths on a single plot, then we need a way to shrink the point size. There are a few ways to do this. The simplest for our purposes is to set the <code>pch</code> option to something else, like a dot instead of a circle.</p>
-<div class="cell">
+<div class="cell" data-hash="00-lab-R-intro_cache/html/unnamed-chunk-14_9e10489adc729ef6cc499b19ec095e7b">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>times <span class="ot">=</span> <span class="dv">0</span><span class="sc">:</span>(<span class="fu">dim</span>(N)[<span class="dv">1</span>]<span class="sc">-</span><span class="dv">1</span>)</span>
@@ -427,7 +427,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <p>To change to a log scale, use the <code>log</code> option which you can set to either <code>log="x"</code> or <code>log="y"</code>:</p>
-<div class="cell">
+<div class="cell" data-hash="00-lab-R-intro_cache/html/unnamed-chunk-15_23ffa057e08663afc54a9fd730cc68f0">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(times,N[,], <span class="at">pch=</span><span class="st">"."</span>, <span class="at">log =</span> <span class="st">"y"</span>,<span class="at">ann=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -437,7 +437,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <p>If you don’t have lots and lots of points, the dots might not show up. you can try <code>o</code> or <code>*</code> or some other symbol. Try each of these variations and see if you can deduce the meaning of the options</p>
-<div class="cell">
+<div class="cell" data-hash="00-lab-R-intro_cache/html/unnamed-chunk-16_eb585c4b77135e1bb8c44e60bfca6a91">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(times,N, <span class="at">col=</span><span class="dv">1</span>, <span class="at">lty =</span> <span class="st">"dashed"</span>, <span class="at">type=</span><span class="st">"l"</span>,<span class="at">log =</span> <span class="st">"y"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -446,7 +446,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="00-lab-R-intro_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<div class="cell">
+<div class="cell" data-hash="00-lab-R-intro_cache/html/unnamed-chunk-17_5a66acacde647bb17771b319ff3b640a">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(times,N,<span class="at">ann=</span><span class="cn">FALSE</span>, </span>
@@ -459,7 +459,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="00-lab-R-intro_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<div class="cell">
+<div class="cell" data-hash="00-lab-R-intro_cache/html/unnamed-chunk-18_cd99189608b616741e311a6f63166630">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(times,N,<span class="at">ann=</span><span class="cn">FALSE</span>,</span>
@@ -474,14 +474,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>There are several ways to add things to plots.<br>
 You can try the <code>lines</code> or <code>curves</code> functions. For example:</p>
-<div class="cell">
+<div class="cell" data-hash="00-lab-R-intro_cache/html/unnamed-chunk-19_17988b3c19606997be2ddb96100d08d9">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(times,No<span class="sc">*</span><span class="fu">exp</span>(b<span class="sc">*</span>times))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>adds an exponential curve to the plot.</p>
-<div class="cell">
+<div class="cell" data-hash="00-lab-R-intro_cache/html/unnamed-chunk-20_0a3313a894d5de9f2462a635b9c36260">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>    <span class="fu">curve</span>(No<span class="sc">*</span><span class="fu">exp</span>(b<span class="sc">*</span>x),<span class="at">add=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -489,14 +489,14 @@ You can try the <code>lines</code> or <code>curves</code> functions. For example
 </div>
 <p>Does the same thing.</p>
 <p>You can make the line thicker.</p>
-<div class="cell">
+<div class="cell" data-hash="00-lab-R-intro_cache/html/unnamed-chunk-21_3af53d038a4b7a8d582df821e6b88284">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lines</span>(times,No<span class="sc">*</span><span class="fu">exp</span>(b<span class="sc">*</span>times),<span class="at">lwd=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Or you can make it a red, double-dashed line.</p>
-<div class="cell">
+<div class="cell" data-hash="00-lab-R-intro_cache/html/unnamed-chunk-22_90713c4f96e2c6e28f47cb5bc7d78a71">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lines</span>(times,No<span class="sc">*</span><span class="fu">exp</span>(b<span class="sc">*</span>times),<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">lty=</span><span class="st">"twodash"</span>,<span class="at">col=</span><span class="st">'red'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -508,7 +508,7 @@ You can try the <code>lines</code> or <code>curves</code> functions. For example
 <h2 data-number="2.5" class="anchored" data-anchor-id="prettier-plots-with-ggplot"><span class="header-section-number">2.5</span> Prettier plots with ggplot</h2>
 <p>The <code>ggplot2</code> library provides a fancier plotting interface. To use the package, we need to mangle our data into a long format. You could use the <code>tidyr</code> package, but for now, lets play a bit with data frames and <code>rep</code>.</p>
 <p>Assuming we have our data in the matrix <code>N</code> whose columns are separate simulations, we rearrange it into a long format as follows.</p>
-<div class="cell">
+<div class="cell" data-hash="00-lab-R-intro_cache/html/unnamed-chunk-23_fe0f758cddfdf557ff8388a92f703502">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>T <span class="ot">=</span> <span class="fu">dim</span>(N)[<span class="dv">1</span>]</span>
@@ -522,7 +522,7 @@ You can try the <code>lines</code> or <code>curves</code> functions. For example
 </div>
 <p>The <code>times</code> and <code>each</code> arguments to <code>rep</code> indicate the number of times to replicate the vectors <code>1:T</code> and <code>1:S</code>. One instance repeats the entire vector <code>S</code> times and the other repeats each element <code>T</code> times. <code>as.factor</code> essentially adds some information to the vector <code>run</code> so that ggplot will treat the entries as factors. We’ll see why when we play with the plots. <code>as.vector</code> simply treats the data in the matrix <code>N</code> as if it were a vector. R stores matrices in column-order, so this effectively stacks the columns into one long vector of length <code>TxS</code>.</p>
 <p>Use <code>str(df)</code> to see the structure of the data frame <code>df</code></p>
-<div class="cell">
+<div class="cell" data-hash="00-lab-R-intro_cache/html/unnamed-chunk-24_7d3ed2960b2ecaf2bd6c91b74b15b61b">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -531,12 +531,12 @@ You can try the <code>lines</code> or <code>curves</code> functions. For example
 <pre><code>'data.frame':   20000 obs. of  3 variables:
  $ time      : int  1 2 3 4 5 6 7 8 9 10 ...
  $ run       : Factor w/ 20 levels "1","2","3","4",..: 1 1 1 1 1 1 1 1 1 1 ...
- $ population: num  2 2 2 2 2 2 2 2 3 3 ...</code></pre>
+ $ population: num  2 2 2 2 2 2 2 2 2 2 ...</code></pre>
 </div>
 </div>
 <p>If this is your fist use of ggplot you may need to install the package. Use Rstudio’s graphical interface, or try <code>install.packages("ggplot2")</code> if you aren’t using a fancy interface.</p>
 <p>First we’ll source the package. Then create a simple plot.</p>
-<div class="cell">
+<div class="cell" data-hash="00-lab-R-intro_cache/html/unnamed-chunk-25_6434ac96f2c19d6755b18812d8902008">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>

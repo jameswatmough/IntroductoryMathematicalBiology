@@ -221,7 +221,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="initial-set-up" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="initial-set-up"><span class="header-section-number">3.1</span> Initial set up</h2>
 <p>Once you’ve played around a bit, start up a new session and load up the Gillespie routines</p>
-<div class="cell">
+<div class="cell" data-hash="01-lab-BirthProcess_cache/html/unnamed-chunk-1_c5d35d8560963cadf2c257d9c1ae3a5c">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GillespieSSA2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -237,7 +237,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>In a population of <span class="math inline">\(N\)</span> such organisms, operating independently, births would occur at rate <span class="math inline">\(bN\)</span> and deaths at rate <span class="math inline">\(dN\)</span>.</p>
 <p>Our model has a single state variable, which we’ll call <code>population</code>, and a two parameters: a birth rate <code>b</code>, and a death rate <code>d</code>. We also need to set a starting value for the population, which we often view as another parameter (the initial state).</p>
 <p>It is convenient to use named tuples to store defaults for the parameters and initial states.</p>
-<div class="cell">
+<div class="cell" data-hash="01-lab-BirthProcess_cache/html/unnamed-chunk-2_e76b3f85278dff057206f814f5422ec5">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>initial_state <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">population =</span> <span class="dv">1</span>)</span>
@@ -245,7 +245,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </details>
 </div>
 <p>The SSA algorithm needs the model expressed in terms of <code>reactions</code> and <code>rates</code>, which the <code>GillespieSSA2</code> package refers to as <em>propensity functions</em>. We have two of these: one for birth and one for death.</p>
-<div class="cell">
+<div class="cell" data-hash="01-lab-BirthProcess_cache/html/unnamed-chunk-3_4bf1ff2d7330d23b391a33d84709c8ef">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>reactions <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
@@ -256,7 +256,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </details>
 </div>
 <p>To run the simulation, we call <code>ssa</code> with the initial state, reactions, parameters, and a final time. There are several other options you can pass to the routine, but these all have reasonable defaults. There are a few options for expressing the <em>rate</em>, or propensity function. The simplest is likely to enter it as a <code>c++</code> expression wrapped in quotes.</p>
-<div class="cell">
+<div class="cell" data-hash="01-lab-BirthProcess_cache/html/unnamed-chunk-4_664b4e40f42d1d89bc643f1c348ba495">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">ssa</span>(</span>
@@ -291,7 +291,7 @@ SSA finished!</code></pre>
 <h2 data-number="3.3" class="anchored" data-anchor-id="density-dependent-rates"><span class="header-section-number">3.3</span> Density dependent rates</h2>
 <p>A simple extension of this to include a <em>density dependence</em> is to make the death rate nonlinear. For example, replace the constant <em>per capita</em> death rate <span class="math inline">\(d\)</span> with the linearly increasing rate <span class="math inline">\(d + (b-d)N/K\)</span>.</p>
 <p><strong>Question:</strong> what is the value of <span class="math inline">\(N\)</span> for which the birth rate <span class="math inline">\(bN\)</span> matches the death rate <span class="math inline">\(\left( d + (b-d)\frac{N}{K} \right) N\)</span>?</p>
-<div class="cell">
+<div class="cell" data-hash="01-lab-BirthProcess_cache/html/unnamed-chunk-5_19e5f280f2229bdc17cc297543ccdb1f">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>initial_state <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">population =</span> <span class="dv">1</span>)</span>
@@ -331,7 +331,7 @@ SSA finished!</code></pre>
 <h2 data-number="3.4" class="anchored" data-anchor-id="the-lotka-voltera-predator-prey-model"><span class="header-section-number">3.4</span> The Lotka-Voltera predator-prey model</h2>
 <p>Models can easily be extended to add multiple state variables.</p>
 <p>One possible implementation of the Lotka-Volterra predator-prey model is to define two state variables, <code>prey</code> and <code>predator</code>, and three reactions, prey birth, predation, and predator death.</p>
-<div class="cell">
+<div class="cell" data-hash="01-lab-BirthProcess_cache/html/unnamed-chunk-6_770c56534332a1cd32fd96913ab0a1ef">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>initial_state <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">prey =</span> <span class="dv">1000</span>, <span class="at">predators =</span> <span class="dv">1000</span>)</span>
@@ -357,6 +357,8 @@ SSA finished!</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running SSA exact with console output every 1 seconds
 walltime: 0, sim_time: 0
+walltime: 1000003999, sim_time: 1.68572
+walltime: 2007829030, sim_time: 3.49854
 SSA finished!</code></pre>
 </div>
 <details>
@@ -368,7 +370,7 @@ SSA finished!</code></pre>
 </div>
 </div>
 <p>Now we’d really like to sample several solutions from the model to get some idea of the variability. There are many ways to do this. We’ll start by using a fairly simple <em>data frame</em> and a <code>for</code> loop.</p>
-<div class="cell">
+<div class="cell" data-hash="01-lab-BirthProcess_cache/html/unnamed-chunk-7_d3c2f5d8a65ba747d09253e43f44532f">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>res_pred_prey <span class="ot">=</span> <span class="fu">as.data.frame</span>(<span class="cn">NULL</span>)</span>
@@ -398,24 +400,35 @@ SSA finished!</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running SSA exact with console output every 1 seconds
 walltime: 0, sim_time: 0
+walltime: 1000010422, sim_time: 1.79524
+walltime: 2000013177, sim_time: 3.5951
 SSA finished!
 Running SSA exact with console output every 1 seconds
 walltime: 0, sim_time: 0
+walltime: 1000011435, sim_time: 1.79079
+walltime: 2000006050, sim_time: 3.55881
+walltime: 3000004221, sim_time: 4.49554
 SSA finished!
 Running SSA exact with console output every 1 seconds
 walltime: 0, sim_time: 0
+walltime: 1000005464, sim_time: 1.84971
+walltime: 2000022277, sim_time: 3.65765
 SSA finished!
 Running SSA exact with console output every 1 seconds
 walltime: 0, sim_time: 0
+walltime: 1000000310, sim_time: 1.8001
+walltime: 2000009342, sim_time: 3.61428
 SSA finished!
 Running SSA exact with console output every 1 seconds
 walltime: 0, sim_time: 0
+walltime: 1000011220, sim_time: 1.7383
+walltime: 2000011262, sim_time: 3.50501
 SSA finished!</code></pre>
 </div>
 </div>
 <p>Note the use of <code>data.frame</code> at the end of each loop to wrap each simulation result in a data frame with four columns. Then the use of <code>rbind</code> to append the new data frame to the previous one. The first line sets up an empty data frame (<code>NULL</code>) to start with.</p>
 <p>The ggplot2 library provides some powerful plotting tools.</p>
-<div class="cell">
+<div class="cell" data-hash="01-lab-BirthProcess_cache/html/unnamed-chunk-8_46e43ba649ba7350565820427e61b2a6">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
@@ -434,7 +447,7 @@ SSA finished!</code></pre>
 </details>
 </div>
 <p>Notice ggplot wants the data in a <strong>long</strong> format. The easiest way to reshape dataframes is with the <code>tidyr</code> package. You can install this on its own or as part of the <code>tidyverse</code> package.</p>
-<div class="cell">
+<div class="cell" data-hash="01-lab-BirthProcess_cache/html/unnamed-chunk-9_6d4cbc4e75ed930df6e724a5f068a90f">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
@@ -444,11 +457,11 @@ SSA finished!</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>         time prey predator run
 1 0.000000000 1000     1000   1
-2 0.001009586 1005      992   1
-3 0.002021041 1008      989   1
-4 0.003011730 1010      987   1
-5 0.004022904 1010      983   1
-6 0.005017585 1009      982   1</code></pre>
+2 0.001064755 1003      996   1
+3 0.002036914 1007      991   1
+4 0.003005564 1007      990   1
+5 0.004053445 1007      986   1
+6 0.005002070 1014      979   1</code></pre>
 </div>
 <details>
 <summary>Show the code</summary>
@@ -458,16 +471,16 @@ SSA finished!</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>         time run  species population
 1 0.000000000   1 predator       1000
-2 0.001009586   1 predator        992
-3 0.002021041   1 predator        989
-4 0.003011730   1 predator        987
-5 0.004022904   1 predator        983
-6 0.005017585   1 predator        982</code></pre>
+2 0.001064755   1 predator        996
+3 0.002036914   1 predator        991
+4 0.003005564   1 predator        990
+5 0.004053445   1 predator        986
+6 0.005002070   1 predator        979</code></pre>
 </div>
 </div>
 <p>The second and third inputs of <code>gather</code> are the column names for the long format, and the fourth input is the range of columns from the <strong>wide</strong> data frame (<code>res_pred_prey</code>) to reshape.</p>
 <p>We can use ggplot to assign colours and line-types by <code>run</code> and <code>species</code></p>
-<div class="cell">
+<div class="cell" data-hash="01-lab-BirthProcess_cache/html/unnamed-chunk-10_fbeb9243eef3098383cc47a93d10f5f6">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(res_long,<span class="fu">aes</span>(<span class="at">x=</span>time,<span class="at">y=</span>population,<span class="at">linetype=</span>run,<span class="at">col=</span>species)) <span class="sc">+</span> <span class="fu">geom_step</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -477,7 +490,7 @@ SSA finished!</code></pre>
 </div>
 </div>
 <p>The result is interesting, but probably too much for one plot. We can put each plot in a panel using <code>facet_grid</code> or <code>facet_plot</code>.</p>
-<div class="cell">
+<div class="cell" data-hash="01-lab-BirthProcess_cache/html/unnamed-chunk-11_abfea70ec1af37505c79f017fdc8f23b">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>

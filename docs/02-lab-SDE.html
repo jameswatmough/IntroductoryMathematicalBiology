@@ -241,7 +241,7 @@ div.csl-indent {
 <p>Consider again the simple birth process with rate <span class="math inline">\(b\)</span>. We found the number of births in a time <span class="math inline">\(t\)</span> was a Poisson random variable with parameter <span class="math inline">\(bt\)</span>. These results are easy to extend to the nonlinear birth-death process <span class="citation" data-cites="Allen2011stochastic">(see <a href="#ref-Allen2011stochastic" role="doc-biblioref">Allen 2011</a>)</span>. To simplify our previous notation, suppose <span class="math inline">\(b_n\)</span> and <span class="math inline">\(d_n\)</span> are the birth and death rates given a current population size <span class="math inline">\(n\)</span>. Thus in a (vanishingly) small time interval <span class="math inline">\(\tau\)</span>, a single birth occurs with probability <span class="math inline">\(b_n\tau + o(\tau)\)</span>, a single death occurs with probability <span class="math inline">\(d_n\tau + o(\tau)\)</span>, a combination of the two events occurs with probability <span class="math inline">\(o(\tau)\)</span>, and neither event occurs with probability <span class="math inline">\(1 - (b_n + d_n)\tau + o(\tau)\)</span>. Allowing a longer time step, still denoted by <span class="math inline">\(\tau\)</span>, the number of births and deaths occurring during the step are Poisson random variables with rates <span class="math inline">\(b_n\tau\)</span> and <span class="math inline">\(d_n\tau\)</span> respectively.</p>
 <p>To illustrate, use our logistic birth-death process with <span class="math inline">\(b_n = bn\)</span> and <span class="math inline">\(d_n = (d+cn)n\)</span>. We’ll refer to <span class="math inline">\(b_n\)</span> and <span class="math inline">\(d_n\)</span> as the birth and rates and to <span class="math inline">\(b\)</span> and <span class="math inline">\(d\)</span> as the per-capita birth and death rates.</p>
 <p>First, set up the birth and death rates and pick some parameters.</p>
-<div class="cell">
+<div class="cell" data-hash="02-lab-SDE_cache/html/unnamed-chunk-1_7fa0abc176d3b0bbbaf22545673750de">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>births <span class="ot">=</span> <span class="cf">function</span>(n) b<span class="sc">*</span>n</span>
@@ -253,7 +253,7 @@ div.csl-indent {
 </details>
 </div>
 <p>With these rates, we should expect on average 5 births and 5 deaths per unit time at a population of 500. If we take a step size of 20 time units, we expect 100 births and 100 deaths on average. This may seem large, but the standard deviation of the Poisson distribution with mean 100 is 10.</p>
-<div class="cell">
+<div class="cell" data-hash="02-lab-SDE_cache/html/unnamed-chunk-2_ac46bde5c2b5f4564cf83b7a7159c889">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>stepsize <span class="ot">=</span> <span class="dv">20</span></span>
@@ -264,7 +264,7 @@ div.csl-indent {
 </details>
 </div>
 <p>Now we’ve set up a sequence of times and a matrix to hold the results for 20 sample paths. A simple <code>for</code> loop can be used to fill in the rows of <code>n</code>.</p>
-<div class="cell">
+<div class="cell" data-hash="02-lab-SDE_cache/html/unnamed-chunk-3_eba03ff6e6e1eec38ab1a7d903074e1e">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>(<span class="fu">length</span>(times))) {</span>
@@ -280,7 +280,7 @@ div.csl-indent {
 </div>
 </div>
 <p>Creating a heatmap-like image of the results is another good visualization trick, especially for larger samples.</p>
-<div class="cell">
+<div class="cell" data-hash="02-lab-SDE_cache/html/unnamed-chunk-4_afc127d5f6abac988cd986529441efa0">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>breaks <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="fl">1.5</span><span class="sc">*</span>K,<span class="at">length=</span><span class="dv">13</span>)</span>
@@ -300,7 +300,7 @@ div.csl-indent {
 </div>
 <p>Do a few sanity checks before running the <code>for</code> loop. Make sure the breaks do cover the range of <code>N</code>, and that the number of breaks is 12, which is assumed in initializing <code>H</code>.</p>
 <p>To compare with the results of the Gillespie SSA, compute a few sample paths that way.</p>
-<div class="cell">
+<div class="cell" data-hash="02-lab-SDE_cache/html/unnamed-chunk-5_25304efbd9c39ff7f36ab417c45c13f7">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GillespieSSA2)</span>
@@ -344,7 +344,7 @@ div.csl-indent {
 <section id="continuous-state-approximations" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="continuous-state-approximations"><span class="header-section-number">4.2</span> Continuous state approximations</h2>
 <p>When <span class="math inline">\(\lambda\)</span> is large, the normal distribution with mean <span class="math inline">\(\lambda\)</span> and variance <span class="math inline">\(\lambda\)</span> is a reasonable approximation to the Poisson distribution with rate <span class="math inline">\(\lambda\)</span>. Better still, if <span class="math inline">\(B\)</span> and <span class="math inline">\(D\)</span> are normally distributed random variables with means <span class="math inline">\(\mu_b\)</span> and <span class="math inline">\(\mu_d\)</span>, and variances <span class="math inline">\(\sigma_b^2\)</span> and <span class="math inline">\(\sigma_d^2\)</span> respectively, then the difference, <span class="math inline">\(B-D\)</span>, has a normal distribution with mean <span class="math inline">\(\mu_b-\mu_d\)</span> and variance <span class="math inline">\(\sigma^b+\sigma^2_d\)</span>.</p>
-<div class="cell">
+<div class="cell" data-hash="02-lab-SDE_cache/html/unnamed-chunk-6_afeef1ef9a2f2e590434e0f81bac526c">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>(<span class="fu">length</span>(times))) {</span>
