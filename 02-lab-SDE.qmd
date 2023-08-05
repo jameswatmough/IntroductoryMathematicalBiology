@@ -82,8 +82,9 @@ out <-
 		log_buffer=TRUE,
     verbose = FALSE
   )
-Nssa[,i] = out$state
+Nssa[1:length(out$state),i] = out$state
 }
+
 
 breaks[1] = min(Nssa,na.rm=TRUE)
 breaks[12] = max(Nssa,na.rm=TRUE)
