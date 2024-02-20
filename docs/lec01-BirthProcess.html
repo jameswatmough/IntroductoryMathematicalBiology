@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -48,7 +48,13 @@ ul.task-list li input[type="checkbox"] {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -57,6 +63,7 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -66,6 +73,33 @@ ul.task-list li input[type="checkbox"] {
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 </head>
 
 <body class="nav-sidebar floating">
@@ -74,12 +108,12 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./lec01-BirthProcess.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">The Simple Death Process</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./lec01-BirthProcess.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">The Simple Death Process</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -89,7 +123,7 @@ ul.task-list li input[type="checkbox"] {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Introduction to Mathematical Ecology</a> 
@@ -135,7 +169,7 @@ ul.task-list li input[type="checkbox"] {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -185,7 +219,9 @@ ul.task-list li input[type="checkbox"] {
   </div>
   
 
+
 </header>
+
 
 <p>The simple death process is the basis for most of the models we will develop. We suppose an entity can be in one of two states. For example, an organism may be alive or dead; an ion channel may be open or closed; an egg, deposited at some time in the past, may have hatched, or not.</p>
 <section id="a-single-individual" class="level2" data-number="1.1">
@@ -201,16 +237,16 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="event-times" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="event-times"><span class="header-section-number">1.2</span> Event times</h2>
-<p>Consider again a single individual alive at time zero, and let <span class="math inline">\(T\)</span> be the random variable denoting the time the individual dies. From <a href="#eq-cond-prob-death">Equation&nbsp;<span>1.1</span></a>, we know that the probability the organism dies between times <span class="math inline">\(t\)</span> and <span class="math inline">\(t+\tau\)</span> must be <span class="math display">\[\text{Pr}\left(\  T\in (t,t+\tau]  \ \mid\  T&gt;t \ \right) = \mu\tau + o(\tau).\]</span> From the definition of conditional probability and the fact that <span class="math inline">\(\text{Pr}\left(\ T&gt;t \right)\)</span> is a nonincreasing function of <span class="math inline">\(t\)</span>, we know that <span class="math display">\[\text{Pr}\left(\  T\in (t,t+\tau]  \ \mid\  T&gt;t \ \right) = \frac{\text{Pr}\left(\ T&gt;t \right) - \text{Pr}\left(\ T&gt;t+\tau \right)}{\text{Pr}\left(\ T&gt;t \right)}.\]</span> Equating the two expressions leads to <span class="math display">\[\begin{align*}
+<p>Consider again a single individual alive at time zero, and let <span class="math inline">\(T\)</span> be the random variable denoting the time the individual dies. From <a href="#eq-cond-prob-death" class="quarto-xref">Equation&nbsp;<span>1.1</span></a>, we know that the probability the organism dies between times <span class="math inline">\(t\)</span> and <span class="math inline">\(t+\tau\)</span> must be <span class="math display">\[\text{Pr}\left(\  T\in (t,t+\tau]  \ \mid\  T&gt;t \ \right) = \mu\tau + o(\tau).\]</span> From the definition of conditional probability and the fact that <span class="math inline">\(\text{Pr}\left(\ T&gt;t \right)\)</span> is a nonincreasing function of <span class="math inline">\(t\)</span>, we know that <span class="math display">\[\text{Pr}\left(\  T\in (t,t+\tau]  \ \mid\  T&gt;t \ \right) = \frac{\text{Pr}\left(\ T&gt;t \right) - \text{Pr}\left(\ T&gt;t+\tau \right)}{\text{Pr}\left(\ T&gt;t \right)}.\]</span> Equating the two expressions leads to <span class="math display">\[\begin{align*}
   \frac{\text{Pr}\left(\ T&gt;t \right) - \text{Pr}\left(\ T&gt;t+\tau \right)}{\text{Pr}\left(\ T&gt;t \right)} &amp;= \mu\tau + o(\tau) \\
   \frac{\text{Pr}\left(\ T&gt;t \right) - \text{Pr}\left(\ T&gt;t+\tau \right)}{\tau} &amp;= \mu \text{Pr}\left(\ T&gt;t \right) + \frac{o(\tau)}{\tau}
 \end{align*}\]</span> Finally, taking a limit as <span class="math inline">\(\tau\to0\)</span> leads us to a differential equation for <span class="math inline">\(\text{Pr}\left(\ T&gt;t \right)\)</span>. <span class="math display">\[\frac{d}{dt}\text{Pr}\left(\ T&gt;t \right) = - \lim_{\tau\to0}\frac{\text{Pr}\left(\ T&gt;t \right) - \text{Pr}\left(\ T&gt;t+\tau \right)}{\tau} = - \mu \text{Pr}\left(\ T&gt;t \right)\]</span> Solving this equation with the initial condition <span class="math inline">\(\text{Pr}\left(\ T&gt;0 \right)=1\)</span>, we find that <span class="math display">\[\text{Pr}\left(\ T&gt;t \right) = \exp\left(-\displaystyle\int_0^t \mu(s)\, ds\right).\]</span> If the switching rate is constant, then <span class="math inline">\(\text{Pr}\left(\ T&gt;t \right) = e^{-\mu t}\)</span>. That is, <span class="math inline">\(T\)</span> has an exponential distribution with rate <span class="math inline">\(\mu\)</span>.</p>
 <p>This exponential distribution of event times, sometimes called sojourn times, persists across many compartmental models. The assumption that the mortality rate, <span class="math inline">\(\mu\)</span>, is constant and does not depend on time or any aspects of the individual, such as age, implies an exponential distribution of event times with its skew towards short times.</p>
 <div id="exr-exponential-mean" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1.1 </strong></span>Show that the mean of the exponential distribution with rate <span class="math inline">\(\mu\)</span> is <span class="math inline">\(\frac{1}{\mu}\)</span> and hence <span class="math inline">\(\mu\)</span> is the reciprocal of the life expectancy.</p>
+<p><span class="theorem-title"><strong>Exercise 1.1</strong></span> Show that the mean of the exponential distribution with rate <span class="math inline">\(\mu\)</span> is <span class="math inline">\(\frac{1}{\mu}\)</span> and hence <span class="math inline">\(\mu\)</span> is the reciprocal of the life expectancy.</p>
 </div>
 <div id="exr-exponential-quartile" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1.2 </strong></span>Compute the 10th and 90th percentiles of an exponential distribution with rate <span class="math inline">\(\mu\)</span>. That is, find the times <span class="math inline">\(q\)</span> for which <span class="math inline">\(\text{Pr}\left(\ T&lt;q \right) \in \{0.1,0.9\}\)</span></p>
+<p><span class="theorem-title"><strong>Exercise 1.2</strong></span> Compute the 10th and 90th percentiles of an exponential distribution with rate <span class="math inline">\(\mu\)</span>. That is, find the times <span class="math inline">\(q\)</span> for which <span class="math inline">\(\text{Pr}\left(\ T&lt;q \right) \in \{0.1,0.9\}\)</span></p>
 </div>
 <div class="callout-solution" data-collapse="true">
 <p><span class="math display">\[\text{Pr}\left(\ T&lt;q \right) = 1 - \text{Pr}\left(\ T&gt;q \right) = 1 - e^{-\mu q}\]</span> Setting this to <span class="math inline">\(p\)</span> and solving for <span class="math inline">\(q\)</span> in terms of <span class="math inline">\(p\)</span> leads to <span class="math display">\[q = -\frac{1}{\mu}\log p\]</span> For <span class="math inline">\(p= 0.1\)</span>, we find <span class="math inline">\(q\approx\frac{2.3}{\mu}\)</span>, and for <span class="math inline">\(p=0.9\)</span>, we find <span class="math inline">\(q\approx\frac{0.1}{\mu}\)</span>. In other words, 10% of individuals survive at least twice as long as the mean, and 10% die before reaching one tenth the mean age.</p>
@@ -241,7 +277,7 @@ ul.task-list li input[type="checkbox"] {
   \frac{d}{dt}p_0(t) &amp;= -b p_{0}(t). \\
 \end{align*}\]</span></p>
 <div id="exr-birthprocess-1" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 2.1 </strong></span>Show that the solution to the above system of differential equations with <span class="math inline">\(p_0(0)=1\)</span> and <span class="math inline">\(p_n(0) = 0\)</span>, <span class="math inline">\(n\in\{1,2,3,\dots\}\)</span> is <span class="math display">\[p_n(t) = \frac{(b t)^ne^{-b t}}{n!}.\]</span></p>
+<p><span class="theorem-title"><strong>Exercise 2.1</strong></span> Show that the solution to the above system of differential equations with <span class="math inline">\(p_0(0)=1\)</span> and <span class="math inline">\(p_n(0) = 0\)</span>, <span class="math inline">\(n\in\{1,2,3,\dots\}\)</span> is <span class="math display">\[p_n(t) = \frac{(b t)^ne^{-b t}}{n!}.\]</span></p>
 </div>
 <p>By the above exercise, the assumption that the probability of a birth in a short interval of time is proportional to the length of the interval leads to the births having a Poisson distribution with rate <span class="math inline">\(bt\)</span>.</p>
 <p>Now let <span class="math inline">\(T(t)\)</span> be the probability that the next birth event happens within a time <span class="math inline">\(t\)</span>. That is, <span class="math inline">\(T\)</span> is the c.d.f.&nbsp;for the inter-event times. This is simply the probability there is at least one birth in the interval <span class="math inline">\((0,t)\)</span>, thus, <span class="math inline">\(T(t) = 1-p_0(t) = 1-e^{bt}\)</span>. This connection between the exponential and Poisson distributions will turn out to be useful in modelling and simulation.</p>
@@ -366,10 +402,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -379,8 +414,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -393,6 +437,125 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -436,6 +599,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -461,6 +625,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -522,17 +712,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link">
+      <a href="./index.html" class="pagination-link  aria-label=" introduction="" to="" mathematical="" ecology"="">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Introduction to Mathematical Ecology</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./00-lab-R-intro.html" class="pagination-link">
+      <a href="./00-lab-R-intro.html" class="pagination-link" aria-label="<span class='chapter-number'>2</span>&nbsp; <span class='chapter-title'>Introduction to R</span>">
         <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to R</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
+
 
 
 
