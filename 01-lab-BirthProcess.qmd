@@ -2,10 +2,11 @@
 
 ## Initial set up
 
-Once you've played around a bit, start up a new session and load up the Gillespie routines
+Once you've played around a bit, start up a new session and load up the Gillespie routines for the simulations and ggplot2 for some fancy plotting.
 
 ```{r}
 library(GillespieSSA2)
+library(ggplot2)
 ```
 
 You may need to install the package first. See me if you need help with that.
@@ -18,20 +19,20 @@ This consists of a single state, which we'll call `population`, and two transiti
 Our model consists of specifying functions for the rates for the two events.
 
 First, focus on a single individual and suppose this individual gives birth at rate $b$ and dies at rate $d$.
-For simplicity,  suppose the new born individual behaves exactly as the first individual.  In particular,  she is born a reproductive adult.
+For simplicity, suppose the new born individual behaves exactly as the first individual. In particular, she is born a reproductive adult.
 
 In a population of $N$ such organisms, operating independently, births would occur at rate $bN$ and deaths at rate $dN$.
 
-Our model has a single state variable, which we'll call `population`, and a two parameters: a birth rate `b`, and a death rate `d`.  We also need to set a starting value for the population, which we often view as another parameter (the initial state). 
+Our model has a single state variable, which we'll call `population`, and a two parameters: a birth rate `b`, and a death rate `d`.  We also need to set a starting value for the population, which we often view as another parameter (the initial state).
 
-It is convenient to use named tuples to store defaults for the parameters and initial states.  
+It is convenient to use named tuples to store defaults for the parameters and initial states.
 
 ```{r}
 initial_state <- c(population = 1)
 params <- c(b = 0.10, d = 0.02)
 ```
 
-The SSA algorithm needs the model expressed in terms of `reactions` and `rates`, which the `GillespieSSA2` package refers to as *propensity functions*.    We have two of these: one for birth and one for death.
+The SSA algorithm needs the model expressed in terms of `reactions` and `rates`, which the `GillespieSSA2` package refers to as *propensity functions*.  We have two of these: one for birth and one for death.
 
 ```{r}
 reactions <- list(
@@ -57,24 +58,29 @@ out <- ssa(
 plot_ssa(out)
 ```
 
-Our simulation run is now stored in `out`.  Entering `names(out)` or `summary(out)` at the command prompt shows what the simulation returns.  `head(out$time)` and `head(out$state)` show the first few events.   `plot_ssa`  provides a basic plot of the results.
+Our simulation run is now stored in `out`.
+Entering `names(out)` or `summary(out)` at the command prompt shows what the simulation returns.
+`head(out$time)` and `head(out$state)` show the first few events.
+`plot_ssa` provides a basic plot of the results.
 
 ## Density dependent rates
 
-A simple extension of this to include a *density dependence* is to make the death rate nonlinear.  For example,
-replace the constant *per capita* death rate $d$ with the linearly increasing rate $d + (b-d)N/K$.
+A simple extension of this to include a *density dependence* is to make the death rate nonlinear.
+For example, replace the constant *per capita* death rate $d$ with the linearly increasing rate $d + aN$.
 
-
-**Question:**  what is the value of $N$ for which the birth rate $bN$ matches the death rate $\left( d + (b-d)\frac{N}{K} \right) N$?
-
+**Question:** what is the value of $N$ for which the birth rate $bN$ matches the death rate $\left( d + aN \right) N$?
 
 ```{r}
 initial_state <- c(population = 1)
-params <- c(b = 0.10, d = 0.01, K = 100)
+b = 0.1
+d = 0.01
+K = 100
+a = (b-d)/K
+params <- c(b = b, d = d, a = a)
 reactions <- list(
-  # propensity function                          effects             name for reaction
-  reaction("b * population",                      c(population = +1), "birth"),
-  reaction("(d+(b-d)*population/K) * population", c(population = -1), "death")
+  # propensity function                     effects             name for reaction
+  reaction("b * population",                c(population = +1), "birth"),
+  reaction("(d+a*population) * population", c(population = -1), "death")
 )
 
 out <-
@@ -88,16 +94,81 @@ out <-
     verbose = TRUE
   )
 
-plot_ssa(out)
+# plot_ssa(out)
+
+plot(out$time,out$state,type='s')
 ```
 
+Since we are sampling paths from a stochastic process, we need a wrapper to repeat simulations.  See the examples on Predator-Prey models below for more discussion on `rbind`, `data.frame` and `ggplot`.
+
+```{r}
+run_sim = function() {
+  x =ssa(
+    initial_state = initial_state,
+    reactions = reactions,
+    params = params,
+    method = ssa_exact(),
+    final_time = 100,
+    census_interval = .001,
+    verbose = TRUE
+  )
+  return(data.frame(time = x$time, population = x$state))
+}
+
+repeat_sim = function(n = 5){
+  data = data.frame(time = numeric(0), population = integer(0),run = integer(0))
+  for (i in 1:n){
+    out = run_sim()
+    out$run = i
+    data = rbind(data,out)
+  }
+  return(data)
+}
+ 
+
+out = repeat_sim(6)
+ggplot(out,aes(x=time,y=population))+geom_step()+facet_wrap(vars(run),scales='free')
+```
+
+## Adding an Allee Effect
+
+```{r}
+initial_state <- c(population = 10)
+b = 0.1
+d = 0.01
+K = 100
+a = (b-d)/K
+c = K/3
+
+params <- c(b = b, d = d, a = a, c = c)
+reactions <- list(
+  # propensity function                     effects             name for reaction
+  reaction("b * population*population/(c+population)",                c(population = +1), "birth"),
+  reaction("(d+a*population) * population", c(population = -1), "death")
+  )
+
+out <-
+  ssa(
+    initial_state = initial_state,
+    reactions = reactions,
+    params = params,
+    method = ssa_exact(),
+    final_time = 100,
+    census_interval = .001,
+    verbose = TRUE
+  )
+
+# plot_ssa(out) 
+
+plot(out$time,out$state,type='s')
+
+```
 
 ## The Lotka-Voltera predator-prey model
 
 Models can easily be extended to add multiple state variables.
 
 One possible implementation of the Lotka-Volterra predator-prey model is to define two state variables, `prey` and `predator`, and three reactions, prey birth, predation, and predator death.
-
 
 ```{r}
 initial_state <- c(prey = 1000, predators = 1000)
@@ -175,9 +246,10 @@ head(res_pred_prey)
 res_long = gather(res_pred_prey,species,population,predator:prey,factor_key=TRUE)
 head(res_long)
 ```
-The second and third inputs of `gather` are the column names for the long format,  and the fourth input is the range of columns from the **wide** data frame (`res_pred_prey`) to reshape.
+The second and third inputs of `gather` are the column names for the long format, and the fourth input is the range of columns from the **wide** data frame (`res_pred_prey`) to reshape.
 
 We can use ggplot to assign colours and line-types by `run` and `species`
+
 ```{r}
 ggplot(res_long,aes(x=time,y=population,linetype=run,col=species)) + geom_step()
 ```
