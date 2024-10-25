@@ -1,6 +1,6 @@
 ---
 author: James  Watmough
-date: "`r Sys.Date()`"
+date: last-modified
 ---
 
 {{< include texmacros.qmd >}}
@@ -67,7 +67,7 @@ As a simple starting point, consider a simple population whose individuals
 3. all give birth at the same rate.
 
 Let  $N(t)$ be a random variable denoting the population at time $t$, and 
-  let $p_n(t)$ be the probability that $N(t) = n$, where $n\in\{0,1,2,\dots\}$.
+let $p_n(t)$ be the probability that $N(t) = n$, where $n\in\{0,1,2,\dots\}$.
 We will take time to be continuous. 
 Assume that
 the probability that any individual gives birth during the short time interval $(t,t+\tau)$ is independent of $t$ and proportional to $\tau$ and that the probability of
