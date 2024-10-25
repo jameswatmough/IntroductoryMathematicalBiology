@@ -1,0 +1,70 @@
+\documentclass{standalone}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations.pathmorphing,patterns}
+
+\begin{document}
+  
+\begin{tikzpicture}
+  \draw (-6,0)--(6,0) node[below left]{trace $J$};
+  \draw (0,0)--(0,5) node[below right]{det $J$};
+  \draw[domain=-5:5] plot(\x,{5*(\x/5)^2});
+
+% saddle
+\begin{scope}[yshift=-2cm]
+  \fill (0,0) circle(1pt);
+  \draw[->] (-160:1mm)--(-160:1);
+  \draw[->] (20:1mm)--(20:1);
+  \draw[->] (100:1)--(100:1mm);
+  \draw[->] (-80:1)--(-80:1mm);
+  \draw[->] ([shift=(20:1mm)]100:1) .. controls +(-80:5mm) and +(-160:5mm) .. ([shift=(100:1mm)] 20:1);
+  \draw[->] ([shift=(-160:1mm)]100:1) .. controls +(-80:5mm) and +(20:5mm) .. ([shift=(100:1mm)] -160:1);
+  \draw[->] ([shift=(20:1mm)]-80:1) .. controls +(100:5mm) and +(-160:5mm) .. ([shift=(-80:1mm)] 20:1);
+  \draw[->] ([shift=(-160:1mm)]-80:1) .. controls +(100:5mm) and +(20:5mm) .. ([shift=(-80:1mm)] -160:1);
+\end{scope}
+
+% stable spiral
+\begin{scope}[shift=(120:2cm)]
+  \fill (0,0) circle(1pt);
+  \draw[->,domain=0:540,smooth] plot({exp(-\x/300)*sin(\x)},{exp(-\x/300)*cos(\x)});
+\end{scope}
+
+% unstable spiral
+\begin{scope}[shift=(60:2cm)]
+  \fill (0,0) circle(1pt);
+  \draw[<-,domain=0:540,smooth] plot({exp(-\x/300)*sin(\x)},{exp(-\x/300)*cos(\x)});
+\end{scope}
+
+% stable node
+\begin{scope}[shift={(4.8,1.8)}]
+%      \draw[shift={(100:1)}] (-160:1)--(20:1);
+  \fill (0,0) circle(1pt);
+  \draw[<-] (-160:1mm)--(-160:1);
+  \draw[<-] (20:1mm)--(20:1);
+  \draw[->] (100:1)--(100:1mm);
+  \draw[->] (-80:1)--(-80:1mm);
+  \draw[->] ([shift={(20:.9)}]100:.9) .. controls +(-80:5mm) and +(20:5mm) .. ([shift=(100:1mm)] 20:1mm);
+  \draw[->] ([shift={(20:.9)}]-80:.9) .. controls +(100:5mm) and +(20:5mm) .. ([shift=(-80:1mm)] 20:1mm);
+  \draw[->] ([shift={(-160:.9)}]-80:.9) .. controls +(100:5mm) and +(-160:5mm) .. ([shift=(-80:1mm)] -160:1mm);
+  \draw[->] ([shift={(-160:.9)}]100:.9) .. controls +(-80:5mm) and +(-160:5mm) .. ([shift=(100:1mm)] -160:1mm);
+\end{scope}
+
+% unstable node
+\begin{scope}[shift={(-4.8,1.8)}]
+%      \draw[shift={(100:1)}] (-160:1)--(20:1);
+  \fill (0,0) circle(1pt);
+  \draw[->] (-160:1mm)--(-160:1);
+  \draw[->] (20:1mm)--(20:1);
+  \draw[<-] (100:1)--(100:1mm);
+  \draw[<-] (-80:1)--(-80:1mm);
+  \draw[<-] ([shift={(20:.9)}]100:.9) .. controls +(-80:5mm) and +(20:5mm) .. ([shift=(100:1mm)] 20:1mm);
+  \draw[<-] ([shift={(20:.9)}]-80:.9) .. controls +(100:5mm) and +(20:5mm) .. ([shift=(-80:1mm)] 20:1mm);
+  \draw[<-] ([shift={(-160:.9)}]-80:.9) .. controls +(100:5mm) and +(-160:5mm) .. ([shift=(-80:1mm)] -160:1mm);
+  \draw[<-] ([shift={(-160:.9)}]100:.9) .. controls +(-80:5mm) and +(-160:5mm) .. ([shift=(100:1mm)] -160:1mm);
+\end{scope}
+
+\end{tikzpicture}
+
+\end{document}
+
