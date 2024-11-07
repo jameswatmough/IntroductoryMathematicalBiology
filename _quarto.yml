@@ -5,7 +5,7 @@ project:
 book:
   title: "Introduction to Mathematical Ecology"
   author: "James Watmough"
-  date: "2023-01-14"
+  date: last-modified
   chapters:
     - index.qmd
     - lec01-BirthProcess.qmd

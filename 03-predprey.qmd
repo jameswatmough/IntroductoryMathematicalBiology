@@ -76,7 +76,7 @@ We refer to the set of points $(x,y)$ with $x\ge0$ and $y\ge0$ as our *state spa
 
 Solutions to $f(x,y)=0$ and $g(x,y)=0$ are referred to as the $x$-nullclines and $y$-nullclines respectively.     For the Lotka-Volterra model, the $x$-nullclines are the lines $x=0$ and $y=1$, and the $y$-nullclines are the lines  $y=0$ and $x=1$.  The nullclines intersect at the equilibria.  The prey population is decreasing on one side of the prey-nullcline, increasing on the other, and the solutions cross the prey-nullcline parallel to the predator-axis. Hence, the nullclines partition the state spatce into regions where populations are increasing or decreasing.  Since the nullclines of the Lotka-Volterra model are vertical and horizontal lines, a simple check of the signs of $f$ and $g$ in each of the four regions shows that solutions must oscillate counterclockwise around the nontrivial equilibrium. 
 
-![Phase Portrait](figures/figure-nullclines){#fig-nullclines width=80%}
+![Phase Portrait](figures/fig-nullclines){#fig-nullclines width=80%}
 
 
 Another trick that often provides insight is to consider the solutions curves as graphs of a function $y(x)$.  Since, under reasonable conditions, $\dfrac{dy}{dx} = \dfrac{dy}{dt}/\dfrac{dx}{dt}$, combining the two equations leads to a differential equation for $y(x)$.
@@ -114,7 +114,7 @@ The $x$ nullcline is no longer horizontal, but has the equation $y= 1- x/\kappa$
 The interior equilibrium is at $x=1$, $y=1-1/\kappa$, which is positive only if $\kappa > 1$.
 
 
-![Nullclines for the Rosenzweig-MacArthur model](figures/figure-nullcline-2){#fig-nullcline-2}
+![Nullclines for the Rosenzweig-MacArthur model](figures/fig-nullcline-2){#fig-nullcline-2}
 
 
 Computations show the interior equilibrium to be stable, the trivial equilibrium to be a saddle, and the solutions are oscillations decaying to the interior equilibrium.
@@ -176,28 +176,10 @@ The three functions are usually referred to as
 - the *numerical response* $G$, which models the dependence of the per capita predator growth rate on population densities.
 
 
-@holling1959 introduced a simple classification of functional responses of predators into type I, II, or III (see @fig-hollingIII).  Mathematically, type I and II are similar,  and represent a saturating response.
+@holling1959 introduced a simple classification of functional responses of predators into type I, II, or III (see @fig-holling).  Mathematically, type I and II are similar,  and represent a saturating response.
 
 
-```{r engine='tikz'}
-#| label: fig-hollingIII
-#| echo: false
-
-\begin{tikzpicture}[xscale=2,yscale=4]
-
-  \draw[->] (0,0) -- (4,0);
-  \draw (2,0)node[below]{Prey density};
-  \draw[->] (0,0) -- node[pos=.5,rotate=90,above]{response}(0,1);
-  \draw (0,.5) ;
-  \draw (0,0) -- (.5,.9) -- node[pos=0,above right]{\small type I}(4,.9);
-  \draw[smooth, domain=0:4,dashed] plot(\x,{.9*\x/(\x+.8)});
-  \node[above right=4pt,rotate=25] at (.5,.33) {\small type II};
-  \draw[smooth,domain=0:4,dotted] plot(\x,{.9*\x^2/(\x^2+2)});
-  \node[below right,rotate=38] at (.5,.1) {\small type III};
-
-\end{tikzpicture}
-
-```
+![Holling's functional response curves](figures/fig-hollingIII){#fig-holling}
 
 ### Phase Planes and Linear Stability Analysis
 
@@ -245,70 +227,4 @@ Now suppose $v$ is an real eigenvector of $J$ associated with the real eigenvalu
 $$\dot{a}v = Jav = \lambda av \Rightarrow \dot{a} = \lambda a \Rightarrow a(t) = a(0)e^{\lambda t}$$
 With a few more theorems on the uniqueness of solutions and linear combinations of solutions that can be found in @Logan2006ode we can distill the results down to the diagram of @fig-trace-determinant-diagram.
 
-```{r engine='tikz'}
-#| label: fig-trace-determinant-diagram
-#| fig-cap: Stability of equilibria based on the trace and determinant of the Jacobian matrix
-#| echo: false
-
-  
-\begin{tikzpicture}
-  \draw (-6,0)--(6,0) node[below left]{trace $J$};
-  \draw (0,0)--(0,5) node[below right]{det $J$};
-  \draw[domain=-5:5] plot(\x,{5*(\x/5)^2});
-
-% saddle
-\begin{scope}[yshift=-2cm]
-  \fill (0,0) circle(1pt);
-  \draw[->] (-160:1mm)--(-160:1);
-  \draw[->] (20:1mm)--(20:1);
-  \draw[->] (100:1)--(100:1mm);
-  \draw[->] (-80:1)--(-80:1mm);
-  \draw[->] ([shift=(20:1mm)]100:1) .. controls +(-80:5mm) and +(-160:5mm) .. ([shift=(100:1mm)] 20:1);
-  \draw[->] ([shift=(-160:1mm)]100:1) .. controls +(-80:5mm) and +(20:5mm) .. ([shift=(100:1mm)] -160:1);
-  \draw[->] ([shift=(20:1mm)]-80:1) .. controls +(100:5mm) and +(-160:5mm) .. ([shift=(-80:1mm)] 20:1);
-  \draw[->] ([shift=(-160:1mm)]-80:1) .. controls +(100:5mm) and +(20:5mm) .. ([shift=(-80:1mm)] -160:1);
-\end{scope}
-
-% stable spiral
-\begin{scope}[shift=(120:2cm)]
-  \fill (0,0) circle(1pt);
-  \draw[->,domain=0:540,smooth] plot({exp(-\x/300)*sin(\x)},{exp(-\x/300)*cos(\x)});
-\end{scope}
-
-% unstable spiral
-\begin{scope}[shift=(60:2cm)]
-  \fill (0,0) circle(1pt);
-  \draw[<-,domain=0:540,smooth] plot({exp(-\x/300)*sin(\x)},{exp(-\x/300)*cos(\x)});
-\end{scope}
-
-% stable node
-\begin{scope}[shift={(4.8,1.8)}]
-%      \draw[shift={(100:1)}] (-160:1)--(20:1);
-  \fill (0,0) circle(1pt);
-  \draw[<-] (-160:1mm)--(-160:1);
-  \draw[<-] (20:1mm)--(20:1);
-  \draw[->] (100:1)--(100:1mm);
-  \draw[->] (-80:1)--(-80:1mm);
-  \draw[->] ([shift={(20:.9)}]100:.9) .. controls +(-80:5mm) and +(20:5mm) .. ([shift=(100:1mm)] 20:1mm);
-  \draw[->] ([shift={(20:.9)}]-80:.9) .. controls +(100:5mm) and +(20:5mm) .. ([shift=(-80:1mm)] 20:1mm);
-  \draw[->] ([shift={(-160:.9)}]-80:.9) .. controls +(100:5mm) and +(-160:5mm) .. ([shift=(-80:1mm)] -160:1mm);
-  \draw[->] ([shift={(-160:.9)}]100:.9) .. controls +(-80:5mm) and +(-160:5mm) .. ([shift=(100:1mm)] -160:1mm);
-\end{scope}
-
-% unstable node
-\begin{scope}[shift={(-4.8,1.8)}]
-%      \draw[shift={(100:1)}] (-160:1)--(20:1);
-  \fill (0,0) circle(1pt);
-  \draw[->] (-160:1mm)--(-160:1);
-  \draw[->] (20:1mm)--(20:1);
-  \draw[<-] (100:1)--(100:1mm);
-  \draw[<-] (-80:1)--(-80:1mm);
-  \draw[<-] ([shift={(20:.9)}]100:.9) .. controls +(-80:5mm) and +(20:5mm) .. ([shift=(100:1mm)] 20:1mm);
-  \draw[<-] ([shift={(20:.9)}]-80:.9) .. controls +(100:5mm) and +(20:5mm) .. ([shift=(-80:1mm)] 20:1mm);
-  \draw[<-] ([shift={(-160:.9)}]-80:.9) .. controls +(100:5mm) and +(-160:5mm) .. ([shift=(-80:1mm)] -160:1mm);
-  \draw[<-] ([shift={(-160:.9)}]100:.9) .. controls +(-80:5mm) and +(-160:5mm) .. ([shift=(100:1mm)] -160:1mm);
-\end{scope}
-
-\end{tikzpicture}
-
-```
+![Stability of equilibria based on the trace and determinant of the Jacobian matrix](figures/fig-stability-diagram){#fig-trace-determinant-diagram}
