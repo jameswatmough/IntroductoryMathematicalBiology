@@ -13,6 +13,7 @@ book:
     - 01-lab-BirthProcess.qmd
     - 02-lab-SDE.qmd
     - 03-predprey.qmd
+    - references.qmd
 
 bibliography: M4563Lectures.bib
 
