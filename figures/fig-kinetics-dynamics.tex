@@ -1,0 +1,20 @@
+\documentclass{standalone}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations.pathmorphing,patterns}
+
+\begin{document}
+  
+\begin{tikzpicture}[yscale=8,xscale=2]
+  \draw[->] (0,0)--(6,0);
+  \draw[->] (0,0)--(0,1.2); 
+  \draw (3,-2pt) node[anchor=north]{Substrate ($s$)};
+  \draw (-4pt,.5) node[anchor=south,rotate=90]{Complex ($c$)};
+  \draw (0,1) -- (-2pt,1) node[anchor=east]{$e_0$};
+  \draw[smooth, thick, domain=0:6] plot(\x,{\x/(1/2+\x)});
+  \draw[smooth, thick, domain=0:6] plot(\x,{\x/(1+\x)});
+\end{tikzpicture}
+
+\end{document}
+
