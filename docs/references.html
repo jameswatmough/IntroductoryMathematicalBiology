@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="James Watmough">
-<meta name="dcterms.date" content="2024-11-07">
 
-<title>Introduction to Mathematical Ecology</title>
+<title>References – Introduction to Mathematical Ecology</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,7 +20,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -32,7 +49,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./lec01-BirthProcess.html" rel="next">
+<link href="./03-predprey.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -82,7 +99,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Introduction to Mathematical Ecology</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./references.html">References</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -109,7 +126,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Introduction to Mathematical Ecology</span></a>
   </div>
 </li>
@@ -145,7 +162,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">
+  <a href="./references.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">References</span></a>
   </div>
 </li>
@@ -154,40 +171,22 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#introduction-to-mathematical-ecology" id="toc-introduction-to-mathematical-ecology" class="nav-link active" data-scroll-target="#introduction-to-mathematical-ecology">Introduction to Mathematical Ecology</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Introduction to Mathematical Ecology</h1>
+<h1 class="title">References</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>James Watmough </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">November 7, 2024</p>
-    </div>
-  </div>
   
     
   </div>
@@ -197,19 +196,28 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="introduction-to-mathematical-ecology" class="level1 unnumbered">
-<h1 class="unnumbered">Introduction to Mathematical Ecology</h1>
-<p>These pages contain lecture notes, lab worksheets, and exercises for Mathematical Ecology.</p>
-<!--
-My first lecture for the [3MC school on Mathematical Modelling in Biology](https://natural-sciences.nwu.ac.za/paa/3MC-School-BM/Program) covered material in [@sec-deathprocess] and the labs on R [@sec-lab-intro-to-R] and the GillespieSSA routines [@sec-lab-GillespieSSA].
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-Allen2011stochastic" class="csl-entry" role="listitem">
+Allen, Linda J. S. 2011. <em>An Introduction to Stochastic Processes
+with Applications to Biology</em>. CRC Press. <a href="https://unb.on.worldcat.org/oclc/908670270">https://unb.on.worldcat.org/oclc/908670270</a>.
+</div>
+<div id="ref-holling1959" class="csl-entry" role="listitem">
+Holling, Crawford S. 1959. <span>“Some Characteristics of Simple Types
+of Predation and Parasitism.”</span> <em>The Canadian Entomologist</em>
+91 (07): 385–98.
+</div>
+<div id="ref-Logan2006ode" class="csl-entry" role="listitem">
+Logan, David. 2006. <em>A First Course in Differential Equations</em>.
+Springer.
+</div>
+<div id="ref-turchin2003" class="csl-entry" role="listitem">
+Turchin, Peter. 2003. <em>Complex Population Dynamics: A
+Theoretical/Empirical Synthesis</em>. Vol. 35. Princeton University
+Press. <a href="https://unb.on.worldcat.org/oclc/828302490">https://unb.on.worldcat.org/oclc/828302490</a>.
+</div>
+</div>
 
-The pdf presentation for my second and third lectures can be found [here](SASchool-II.pdf)
 
-The pdf presentation for my fourth lectures can be found [here](SpatialModels-web.pdf)
--->
-
-
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -634,11 +642,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./03-predprey.html" class="pagination-link" aria-label="Consumer-Resource Dynamics">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Consumer-Resource Dynamics</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./lec01-BirthProcess.html" class="pagination-link" aria-label="The Simple Death Process">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">The Simple Death Process</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

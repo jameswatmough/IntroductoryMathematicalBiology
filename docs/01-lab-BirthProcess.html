@@ -205,6 +205,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Consumer-Resource Dynamics</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -603,11 +609,11 @@ SSA finished!</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>         time prey predator run
 1 0.000000000 1000     1000   1
-2 0.001010866 1003      998   1
-3 0.002008453 1002     1001   1
-4 0.003012956 1000     1004   1
-5 0.004017395  999     1000   1
-6 0.005018015  994     1002   1</code></pre>
+2 0.001006049  995      996   1
+3 0.002009907  991      998   1
+4 0.003092260  987     1001   1
+5 0.004053981  983     1003   1
+6 0.005052834  979     1010   1</code></pre>
 </div>
 <details class="code-fold">
 <summary>Show the code</summary>
@@ -617,11 +623,11 @@ SSA finished!</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>         time run  species population
 1 0.000000000   1 predator       1000
-2 0.001010866   1 predator        998
-3 0.002008453   1 predator       1001
-4 0.003012956   1 predator       1004
-5 0.004017395   1 predator       1000
-6 0.005018015   1 predator       1002</code></pre>
+2 0.001006049   1 predator        996
+3 0.002009907   1 predator        998
+4 0.003092260   1 predator       1001
+5 0.004053981   1 predator       1003
+6 0.005052834   1 predator       1010</code></pre>
 </div>
 </div>
 <p>The second and third inputs of <code>gather</code> are the column names for the long format, and the fourth input is the range of columns from the <strong>wide</strong> data frame (<code>res_pred_prey</code>) to reshape.</p>

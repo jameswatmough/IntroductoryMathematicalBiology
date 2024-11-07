@@ -205,6 +205,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Consumer-Resource Dynamics</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -323,11 +329,11 @@ window.Quarto = {
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1] [,2] [,3] [,4] [,5]
 [1,]   20   20   20   20   20
-[2,]   23   22   24   22   25
-[3,]   29   24   28   27   32
-[4,]   34   29   35   29   38
-[5,]   39   36   41   36   48
-[6,]   44   43   50   45   59</code></pre>
+[2,]   26   29   25   27   24
+[3,]   30   34   33   33   26
+[4,]   38   40   39   43   29
+[5,]   43   52   53   51   35
+[6,]   50   58   65   65   39</code></pre>
 </div>
 </div>
 <p>This is all very nice, but for larger simulations, it just won’t do to look at the matrix of numbers. We need some plots. Here are a few useful ones to start with</p>
@@ -597,7 +603,7 @@ You can try the <code>lines</code> or <code>curves</code> functions. For example
 <pre><code>'data.frame':   20000 obs. of  3 variables:
  $ time      : int  1 2 3 4 5 6 7 8 9 10 ...
  $ run       : Factor w/ 20 levels "1","2","3","4",..: 1 1 1 1 1 1 1 1 1 1 ...
- $ population: num  2 2 2 2 2 2 2 2 2 2 ...</code></pre>
+ $ population: num  2 2 2 2 2 3 3 3 3 3 ...</code></pre>
 </div>
 </div>
 <p>If this is your fist use of ggplot you may need to install the package. Use Rstudio’s graphical interface, or try <code>install.packages("ggplot2")</code> if you aren’t using a fancy interface.</p>

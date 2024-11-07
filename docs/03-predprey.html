@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="James Watmough">
+<meta name="dcterms.date" content="2024-11-07">
+
+<title>5&nbsp; Consumer-Resource Dynamics – Introduction to Mathematical Ecology</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./references.html" rel="next">
+<link href="./02-lab-SDE.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-predprey.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Consumer-Resource Dynamics</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Introduction to Mathematical Ecology</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to Mathematical Ecology</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lec01-BirthProcess.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">The Simple Death Process</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-lab-R-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to R</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-lab-BirthProcess.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The GillespieSSA routines</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-lab-SDE.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">The stochastic difference equations and analogous deterministic equations</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-predprey.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Consumer-Resource Dynamics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-lotka-volterra-model" id="toc-the-lotka-volterra-model" class="nav-link active" data-scroll-target="#the-lotka-volterra-model"><span class="header-section-number">5.1</span> The Lotka-Volterra Model</a>
+  <ul class="collapse">
+  <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions"><span class="header-section-number">5.1.1</span> Assumptions</a></li>
+  <li><a href="#analysis" id="toc-analysis" class="nav-link" data-scroll-target="#analysis"><span class="header-section-number">5.1.2</span> Analysis</a></li>
+  </ul></li>
+  <li><a href="#generalized-lotka-volterra-models" id="toc-generalized-lotka-volterra-models" class="nav-link" data-scroll-target="#generalized-lotka-volterra-models"><span class="header-section-number">5.2</span> Generalized Lotka-Volterra Models</a>
+  <ul class="collapse">
+  <li><a href="#the-volterra-model" id="toc-the-volterra-model" class="nav-link" data-scroll-target="#the-volterra-model"><span class="header-section-number">5.2.1</span> The Volterra Model</a></li>
+  <li><a href="#the-rosenzweig-macarthur-model" id="toc-the-rosenzweig-macarthur-model" class="nav-link" data-scroll-target="#the-rosenzweig-macarthur-model"><span class="header-section-number">5.2.2</span> The Rosenzweig-MacArthur Model</a></li>
+  </ul></li>
+  <li><a href="#the-functional-response" id="toc-the-functional-response" class="nav-link" data-scroll-target="#the-functional-response"><span class="header-section-number">5.3</span> The Functional Response</a>
+  <ul class="collapse">
+  <li><a href="#phase-planes-and-linear-stability-analysis" id="toc-phase-planes-and-linear-stability-analysis" class="nav-link" data-scroll-target="#phase-planes-and-linear-stability-analysis"><span class="header-section-number">5.3.1</span> Phase Planes and Linear Stability Analysis</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Consumer-Resource Dynamics</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>James Watmough </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 7, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="the-lotka-volterra-model" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="the-lotka-volterra-model"><span class="header-section-number">5.1</span> The Lotka-Volterra Model</h2>
+<section id="assumptions" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="assumptions"><span class="header-section-number">5.1.1</span> Assumptions</h3>
+<p>Alfred Lotka (PNAS 1920 6(7):410-415) and Vito Volterra (1926) independently proposed a simple predator-prey model. Lotka was motivated by previous work on rhythmic chemical reactions and oscillations in populations. Volterra was motivated by a question posed by Umberto D’Ancona, a marine biologist who later became Volterra’s son-in-law. D’Ancona was curious if Volterra could use mathematical modelling to explain why the proportion of predatory fish in catches increased when fishing effort decreased during the First World War, and then decreased again when fishing resumed.</p>
+<p>The classic Lotka-Volterra model is based on a few simple assumptions.</p>
+<ol type="1">
+<li>Prey grow exponentially at per capita rate <span class="math inline">\(r\)</span> in absence of the predator.</li>
+<li>Prey are killed at a constant per capita rate <span class="math inline">\(a\)</span> per predator.</li>
+<li>Each prey killed due to predation gives rise to <span class="math inline">\(c\)</span> predators.</li>
+<li>Predator death is at a constant per capita rate <span class="math inline">\(m\)</span>.</li>
+</ol>
+<p>The model consists of a pair of differential equations. Here <span class="math inline">\(N\)</span> and <span class="math inline">\(P\)</span> are the prey and predator densities, respectively.<br>
+<span class="math display">\[\begin{align}
+  \frac{dN}{dt} &amp;= rN - aNP, \\
+  \frac{dP}{dt} &amp;= c aNP - mP.
+\end{align}\]</span></p>
+<p>The model has two equilibria:</p>
+<ul>
+<li>the trivial equilibrium <span class="math inline">\(X_0 = (0,0)\)</span>,</li>
+<li>and the interior equilibrium <span class="math inline">\((\bar{N},\bar{P})\)</span> with<br>
+<span class="math display">\[\begin{equation*}
+  \bar{N} = \frac{m}{c a}, \qquad
+  \bar{P} =\frac{r}{a}.
+\end{equation*}\]</span></li>
+</ul>
+</section>
+<section id="analysis" class="level3" data-number="5.1.2">
+<h3 data-number="5.1.2" class="anchored" data-anchor-id="analysis"><span class="header-section-number">5.1.2</span> Analysis</h3>
+<section id="rescaling" class="level4" data-number="5.1.2.1">
+<h4 data-number="5.1.2.1" class="anchored" data-anchor-id="rescaling"><span class="header-section-number">5.1.2.1</span> Rescaling</h4>
+<p>Rescaling is a simple case of dimensional analysis and can be very helpful in analyzing simple models. The basic idea is that we are free to choose the scale of each variable, and with a clever choice of rescalings we can reduce the number of parameters in the model. Let <span class="math inline">\(N^*\)</span>, <span class="math inline">\(P^*\)</span>, and <span class="math inline">\(t^*\)</span> be arbitrary constants representing the rescalings, and introduce the rescaled variables as <span class="math inline">\(x = N/N^*\)</span>, <span class="math inline">\(y = P/P^*\)</span>, and <span class="math inline">\(s = t/t^*\)</span>. The equations governing the dynamics of the rescaled variables can be found by a simple application of the chain rule to <span class="math inline">\(N^*x(s) = N(t^*s)\)</span>: <span class="math display">\[\begin{equation*}
+  N^*\frac{dx}{ds} = \frac{dN}{dt} \frac{dt}{ds} = t^* \frac{dN}{dt}
+\end{equation*}\]</span> Similarily, <span class="math inline">\(\frac{dy}{ds} = \frac{t^*}{P^*}\frac{dP}{dt}\)</span>. Together, these lead to the equations</p>
+<p><span class="math display">\[\begin{align*}
+  \frac{dx}{ds} &amp;= \frac{t^*}{N^*} \left( rN^*x - aN^*xP^*y \strut \right),\\
+  \frac{dy}{ds} &amp;= \frac{t^*}{P^*} \left( caN^*xP^*y  -  mP^*y \strut \right).      
+\end{align*}\]</span> The clever trick is to now gather the rescalings and parameters into groups and choose the rescalings to eliminate select groups. <span class="math display">\[\begin{align*}
+  \frac{dx}{ds} &amp;= \framebox{$rt^*$}\ x - \framebox{$at^*P^*$}\ xy ,\\
+  \frac{dy}{ds} &amp;= \framebox{$cat^*N^*$}\ xy  -  \framebox{$mt^*$}\ y .      
+\end{align*}\]</span> This leaves us with four groupings and three rescalings to choose. In general, we would expect to be able to choose the rescalings to set three of the groups to one. Another option is to choose the scalings to set two groups equal to one another. For example, we can choose the rescalings to satisfy the three conditions <span class="math display">\[\begin{gather*}
+  rt^* = 1, \\
+  at^*P^*=1, \\
+  cat^*N^*=mt^*.
+\end{gather*}\]</span> Solving these leads to the rescalings <span class="math inline">\(t^* = 1/r\)</span>, <span class="math inline">\(N^* = m/(ca)\)</span> and <span class="math inline">\(P^* = r/a\)</span>. Introducing the new rescaled parameter <span class="math inline">\(\mu = m/r\)</span>, we find</p>
+<p><span id="eq-lvrescaled"><span class="math display">\[\begin{aligned}
+  \frac{dx}{dt} &amp;= f(x,y) = x(1 - y),           \\
+  \frac{dy}{dt} &amp;= g(x,y) = \mu y(x -  1),      
+\end{aligned} \tag{5.1}\]</span></span></p>
+<p>Our interpretation of the scalings is that time is measured relative to the growth rate of the Prey, Prey densities are measured relative to the ratio of the prey mortality and the prey growth rate per predator, which we previously found to be the equilibrium prey population, and prey densities are measured relative to the ratio of the prey growth rate and the attack rate, which we found to be the equilibrium predator population. The resulting single parameter <span class="math inline">\(\mu\)</span> is a rescaled predator mortality (<span class="math inline">\(\mu = m/r\)</span>).</p>
+</section>
+<section id="phase-plane-analysis" class="level4" data-number="5.1.2.2">
+<h4 data-number="5.1.2.2" class="anchored" data-anchor-id="phase-plane-analysis"><span class="header-section-number">5.1.2.2</span> Phase Plane Analysis</h4>
+<p>We refer to the set of points <span class="math inline">\((x,y)\)</span> with <span class="math inline">\(x\ge0\)</span> and <span class="math inline">\(y\ge0\)</span> as our <em>state space</em>. Geometrically, Equations <a href="#eq-lvrescaled" class="quarto-xref">Equation&nbsp;<span>5.1</span></a> specify a vector field on the state space, and solutions of the equations are curves which are tangent to these vectors at each point. A point <span class="math inline">\((x,y)\)</span> for which <span class="math inline">\(f(x,y)=g(x,y)=0\)</span> is an equilibrium solution: these are constant solutions satisfying the differential equations.</p>
+<p>Solutions to <span class="math inline">\(f(x,y)=0\)</span> and <span class="math inline">\(g(x,y)=0\)</span> are referred to as the <span class="math inline">\(x\)</span>-nullclines and <span class="math inline">\(y\)</span>-nullclines respectively. For the Lotka-Volterra model, the <span class="math inline">\(x\)</span>-nullclines are the lines <span class="math inline">\(x=0\)</span> and <span class="math inline">\(y=1\)</span>, and the <span class="math inline">\(y\)</span>-nullclines are the lines <span class="math inline">\(y=0\)</span> and <span class="math inline">\(x=1\)</span>. The nullclines intersect at the equilibria. The prey population is decreasing on one side of the prey-nullcline, increasing on the other, and the solutions cross the prey-nullcline parallel to the predator-axis. Hence, the nullclines partition the state spatce into regions where populations are increasing or decreasing. Since the nullclines of the Lotka-Volterra model are vertical and horizontal lines, a simple check of the signs of <span class="math inline">\(f\)</span> and <span class="math inline">\(g\)</span> in each of the four regions shows that solutions must oscillate counterclockwise around the nontrivial equilibrium.</p>
+<div id="fig-nullclines" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-nullclines-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/fig-nullclines.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-nullclines-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.1: Phase Portrait
+</figcaption>
+</figure>
+</div>
+<p>Another trick that often provides insight is to consider the solutions curves as graphs of a function <span class="math inline">\(y(x)\)</span>. Since, under reasonable conditions, <span class="math inline">\(\dfrac{dy}{dx} = \dfrac{dy}{dt}/\dfrac{dx}{dt}\)</span>, combining the two equations leads to a differential equation for <span class="math inline">\(y(x)\)</span>. <span id="eq-lvyofx"><span class="math display">\[\frac{dy}{dx} = \frac{\mu y(x -  1)}{x(1 - y)}. \tag{5.2}\]</span></span> This can be integrated as <span id="eq-lvpsi"><span class="math display">\[\Psi(x,y) = \mu (x - \log x) + y - \log y. \tag{5.3}\]</span></span></p>
+<p>Solutions of <a href="#eq-lvyofx" class="quarto-xref">Equation&nbsp;<span>5.2</span></a> are level curves of <span class="math inline">\(\Psi\)</span>. Since <span class="math inline">\(\Psi\)</span> is concave in the positive quadrant, these will be closed curves, or periodic orbits, surrounding the interior equilibrium.</p>
+<p>Now let <span class="math inline">\(T\)</span> be the period of oscillation of a particular solution to the model. From <a href="#eq-lvrescaled" class="quarto-xref">Equation&nbsp;<span>5.1</span></a> we have <span class="math display">\[\begin{align*}
+  \frac{1}{T}\int_{x(t_0)}^{x(t_0+T)} \frac{1}{x}\, dx = 1-\frac{1}{T}\int_{t_0}^{t_0+T} y(t)\, dt, \\
+  \text{and}\quad
+  \frac{1}{\mu T}\int_{y(t_0)}^{y(t_0+T)} \frac{1}{y}\, dy = \frac{1}{T}\int_{t_0}^{t_0+T} x(t)\, dt - 1.
+\end{align*}\]</span> Since the solutions are periodic with period <span class="math inline">\(T\)</span>, the integrals on the left are zero. The integrals on the right are simply the mean values of <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> over one full period. Hence, we conclude that the mean populations on any orbit are equal to the equilibrium populations. Volterra concluded from this that an intervention in a predator-prey system that removes both predator and prey with equal effort, will result in increased average prey populations.</p>
+</section>
+</section>
+</section>
+<section id="generalized-lotka-volterra-models" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="generalized-lotka-volterra-models"><span class="header-section-number">5.2</span> Generalized Lotka-Volterra Models</h2>
+<section id="the-volterra-model" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="the-volterra-model"><span class="header-section-number">5.2.1</span> The Volterra Model</h3>
+<p>In 1931, Volterra published an analysis of a predator-prey model with a prey carrying capacity: <span class="math display">\[\begin{align}
+  \frac{dN}{dt} &amp;= rN\left(1-\frac{N}{K}\right) - aNP, \\
+  \frac{dP}{dt} &amp;= c aNP - mP.
+\end{align}\]</span> The model can be rescaled to yield <span class="math display">\[\begin{align}
+  x' &amp;= x\left(1-\frac{x}{\kappa}\right) - xy, \\
+  y' &amp;= \mu y(x - 1).
+\end{align}\]</span></p>
+<p>These equations represent a similar vector field to the original Lotka-Volterra model. The <span class="math inline">\(x\)</span> nullcline is no longer horizontal, but has the equation <span class="math inline">\(y= 1- x/\kappa\)</span>. The interior equilibrium is at <span class="math inline">\(x=1\)</span>, <span class="math inline">\(y=1-1/\kappa\)</span>, which is positive only if <span class="math inline">\(\kappa &gt; 1\)</span>.</p>
+<div id="fig-nullcline-2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-nullcline-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/fig-nullcline-2.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-nullcline-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.2: Nullclines for the Rosenzweig-MacArthur model
+</figcaption>
+</figure>
+</div>
+<p>Computations show the interior equilibrium to be stable, the trivial equilibrium to be a saddle, and the solutions are oscillations decaying to the interior equilibrium.</p>
+</section>
+<section id="the-rosenzweig-macarthur-model" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="the-rosenzweig-macarthur-model"><span class="header-section-number">5.2.2</span> The Rosenzweig-MacArthur Model</h3>
+<p>Rosenweig and MacArthur (1963) are credited with the addition of a hyperbolic functional response to the classic predator-prey model. <span id="eq-rmac"><span class="math display">\[\begin{aligned}
+  \frac{dN}{dt} &amp;= rN\left(1-\frac{N}{K}\right) - \frac{aNP}{1 + bN}, \\
+  \frac{dP}{dt} &amp;= c \frac{aNP}{1 + bN} - mP.
+\end{aligned} \tag{5.4}\]</span></span></p>
+<p>They assume that the rate predators kill prey increases linearly with prey at small densities, but saturates at higher prey densities. The numerical response is taken to be proportional to the functional response, just as in the simpler Lotka-Volterra model.</p>
+<p>The model has a trivial equilibrium at <span class="math inline">\((0,0)\)</span> and a predator-free equilibrium at <span class="math inline">\((0,K)\)</span>. There is a single interior equilibrium <span class="math inline">\((\bar{N},\bar{P})\)</span> with <span class="math display">\[\begin{align*}
+\bar{N} &amp;= \frac{m}{ca-mb}, \\
+\bar{P} &amp;= r\bar{N}(1+b\bar{N})\left(1-\frac{\bar{N}}{K}\right).
+\end{align*}\]</span> For both <span class="math inline">\(\bar{N}\)</span> and <span class="math inline">\(\bar{P}\)</span> to be positive, we must have <span class="math inline">\(0 &lt; \frac{m}{ca-mb} &lt; K\)</span></p>
+<p>A stability analysis of the interior fixed point is simplified by writing the system in the <em>Kolmogorov form</em> <span id="eq-rmackol"><span class="math display">\[\begin{aligned}
+  \frac{dN}{dt} &amp;= Nf(N), \\
+  \frac{dP}{dt} &amp;= Pg(P),
+\end{aligned} \tag{5.5}\]</span></span> where <span class="math display">\[f(N,P) = r\left(1-\frac{N}{K}\right) - \frac{aP}{1 + bN},\qquad g(N,P) = c \frac{aN}{1 + bN} - m.\]</span> The interior equilibrium satisfies <span class="math inline">\(f(\bar{N}) = g(\bar{P}) = 0\)</span>.</p>
+<p>The Jacobian at <span class="math inline">\((\bar{N},\bar{P})\)</span> is <span class="math display">\[\begin{equation*}
+\begin{pmatrix}
+   \bar{N}\bar{f}_N &amp; \bar{N}\bar{f}_P \\
+   \bar{P}\bar{g}_N &amp; \bar{P}\bar{g}_P
+\end{pmatrix}
+\end{equation*}\]</span> where a bar over a function indicates evaluation at the interior equilibrium. Note that <span class="math inline">\(\bar{g}_P = 0\)</span>, <span class="math inline">\(\bar{f}_P &lt; 0\)</span> and <span class="math inline">\(\bar{g}_N&gt;0\)</span>, so that the determinant of <span class="math inline">\(J\)</span> is always positive, and the trace of <span class="math inline">\(J\)</span> is <span class="math display">\[\text{tr}(J) = \bar{N}\bar{f}_N = \frac{rbca}{ca-bm}\left( \frac{ca - bm}{ca} - \frac{1}{Kb}\right).\]</span> Hence, according to the Hopf Birfurcation Theorem, the equilibrium changes from a stable to unstable focus as <span class="math inline">\(\bar{f}_N\)</span> changes from positive to negative. It can further be shown that a stable limit cycle bifurcates from the equilibrium as the trace increases through zero.</p>
+<p>The equilibrium destabilizes as <span class="math inline">\(Kb\)</span> is increased or as <span class="math inline">\(\frac{bm}{ca}\)</span> is decreased. The former is often referred to as the paradox of enrichment. The simple Rosenzweig-MacArthur model predicts that an increase in the <span class="math inline">\(K\)</span>, the carrying capacity of the prey, can destabilize the equilibrium.</p>
+</section>
+</section>
+<section id="the-functional-response" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="the-functional-response"><span class="header-section-number">5.3</span> The Functional Response</h2>
+<p><span class="citation" data-cites="turchin2003">Turchin (<a href="references.html#ref-turchin2003" role="doc-biblioref">2003</a>)</span> provides an excellent discussion of the various responses of predators to changes in prey populations. Consider a general predation model of the form</p>
+<p><span id="eq-lvgeneral"><span class="math display">\[\begin{aligned}
+  \frac{dN}{dt} &amp;= NF(N) - H(N,P)P, \\
+  \frac{dP}{dt} &amp;= G(N,P)P - mP.
+\end{aligned} \tag{5.6}\]</span></span></p>
+<p>The three functions are usually referred to as - the net per capita growth rate <span class="math inline">\(F\)</span>, which is assumed independent of predation, - the <em>functional response</em> <span class="math inline">\(H\)</span>, which is the rate individual predators kill prey, and - the <em>numerical response</em> <span class="math inline">\(G\)</span>, which models the dependence of the per capita predator growth rate on population densities.</p>
+<p><span class="citation" data-cites="holling1959">Holling (<a href="references.html#ref-holling1959" role="doc-biblioref">1959</a>)</span> introduced a simple classification of functional responses of predators into type I, II, or III (see <a href="#fig-holling" class="quarto-xref">Figure&nbsp;<span>5.3</span></a>). Mathematically, type I and II are similar, and represent a saturating response.</p>
+<div id="fig-holling" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-holling-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/fig-hollingIII.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-holling-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.3: Holling’s functional response curves
+</figcaption>
+</figure>
+</div>
+<section id="phase-planes-and-linear-stability-analysis" class="level3" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="phase-planes-and-linear-stability-analysis"><span class="header-section-number">5.3.1</span> Phase Planes and Linear Stability Analysis</h3>
+<p>Consider the pair of differential equations <span id="eq-planar-ode"><span class="math display">\[\begin{aligned}
+  \frac{dx}{dt} &amp;= f(x,y), \\
+  \frac{dy}{dt} &amp;= g(x,y),
+\end{aligned} \tag{5.7}\]</span></span> with initial conditions <span class="math inline">\(x(0) = x_0\)</span>, <span class="math inline">\(y_0=y_0\)</span>. A system of differential equations that does not depend explicity on the independent variable is said to be <em>autonomous</em>. Since we are usually interested in nonnegative solutions to these equations, the state-space of interest is the set <span class="math inline">\((x,y)\)</span> with <span class="math inline">\(x\ge0\)</span> and <span class="math inline">\(y\ge 0\)</span>. A solution to the differential equations consists of a pair of functions, <span class="math inline">\(x(t)\)</span> and <span class="math inline">\(y(t)\)</span>, which, with reasonable restrictions on <span class="math inline">\(f\)</span> and <span class="math inline">\(g\)</span>, will be continuous and differentiable if not for all <span class="math inline">\(t\ge0\)</span> then at least for some interval <span class="math inline">\([0,T)\)</span>. Thus, solutions are either points or curves in the state space, parameterized by the independent variable, <span class="math inline">\(t\)</span>. An equilibrium solution of <a href="#eq-planar-ode" class="quarto-xref">Equation&nbsp;<span>5.7</span></a> is a constant solution <span class="math inline">\((x(t),y(t)\)</span> satisfying <span class="math inline">\(f(x(t),y(t)) = g(x(t),y(t)) = 0\)</span>. This can be visualized as a point in state-space.</p>
+<p>Geometrically, <a href="#eq-planar-ode" class="quarto-xref">Equation&nbsp;<span>5.7</span></a> specifies a vector field on the state space. A solution passing through some point <span class="math inline">\((x,y)\)</span> at time <span class="math inline">\(t\)</span> can be viewed as a curve tangent to the vector <span class="math inline">\((f(x,y),g(x,y))\)</span>.</p>
+<p>Solutions to <span class="math inline">\(f(x,y)=0\)</span> and <span class="math inline">\(g(x,y)=0\)</span> are referred to as the <span class="math inline">\(x\)</span>-nullclines and <span class="math inline">\(y\)</span>-nullclines respectively. The equilibrium solutions are found at the intersections of these nullclines. The nullclines partition the state spatce into regions where the <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> components of the solutions are increasing or decreasing.</p>
+<p>In our analysis of the scaler differential equation, <span class="math inline">\(\dot{x}=f(x)\)</span>, we found that the stability of an equilibrium solution, <span class="math inline">\(x^*\)</span>, was determined by the slope <span class="math inline">\(f'(x^*)\)</span>. If <span class="math inline">\(f'(x^*)&gt;0\)</span>, then <span class="math inline">\(x(t)\)</span> must be decreasing if <span class="math inline">\(x(t)&lt;x^*\)</span> and increasing if <span class="math inline">\(x(t)&gt;x^*\)</span>. Thus solutions near <span class="math inline">\(x^*\)</span> move away from <span class="math inline">\(x^*\)</span> if <span class="math inline">\(f'(x^*)&gt;0\)</span>, but move towards <span class="math inline">\(x^*\)</span> if <span class="math inline">\(f'(x^*)&lt;0\)</span>.</p>
+<p>Let <span class="math inline">\(J\)</span> denote the matrix of partial derivatives of <span class="math inline">\(f\)</span> and <span class="math inline">\(g\)</span> evaluated at the equilibrium: <span class="math display">\[\begin{equation}
+  J = \begin{pmatrix} f_x(x^*,y^*) &amp; f_y(x^*,y^*) \\ g_x(x^*,y^*) &amp; g_y(x^*,y^*) \end{pmatrix}
+\end{equation}\]</span> Near the equilibrium, we can expand the right hand side of the model as a Taylor series about <span class="math inline">\((x^*,y^*)\)</span>: <span class="math display">\[\begin{equation}
+  \begin{pmatrix}
+    \frac{dx}{dt} \\  \frac{dy}{dt}
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    f(x^*,y^*) \\ g(x^*,y^*)
+  \end{pmatrix}
+  +
+  J
+  \begin{pmatrix}
+    (x-x^*) \\ (y-y^*)
+  \end{pmatrix}
+  + \dots
+\end{equation}\]</span> Since <span class="math inline">\(f\)</span> and <span class="math inline">\(g\)</span> are zero at an equilibrium, the linearized system is determined by the matrix <span class="math inline">\(J\)</span>. There is an important theorem that states that the dynamics of the nonlinear system are topologically equivalent to the dynamics of the linearized system provided all the eigenvalues of <span class="math inline">\(J\)</span> have nonzero real part. The stability of the equilibrium and qualitative nature of the solutions near the equilibrium can be determined from the eigenvalues of <span class="math inline">\(J\)</span> provided none of the eigenvalues of <span class="math inline">\(J\)</span> have zero real part.</p>
+<p>Let <span class="math inline">\(u = \begin{pmatrix}     (x-x^*) \\ (y-y^*)   \end{pmatrix}\)</span>. Then the linearized system is simply <span class="math inline">\(\dot{u} = Ju\)</span>. Now suppose <span class="math inline">\(v\)</span> is an real eigenvector of <span class="math inline">\(J\)</span> associated with the real eigenvalue <span class="math inline">\(\lambda\)</span>. Since, <span class="math inline">\(Jv = \lambda v\)</span>, we can find a solution in the direction of lambda by setting <span class="math inline">\(u(t) = a(t)v\)</span> for a scalar function <span class="math inline">\(a\)</span>. <span class="math display">\[\dot{a}v = Jav = \lambda av \Rightarrow \dot{a} = \lambda a \Rightarrow a(t) = a(0)e^{\lambda t}\]</span> With a few more theorems on the uniqueness of solutions and linear combinations of solutions that can be found in <span class="citation" data-cites="Logan2006ode">Logan (<a href="references.html#ref-Logan2006ode" role="doc-biblioref">2006</a>)</span> we can distill the results down to the diagram of <a href="#fig-trace-determinant-diagram" class="quarto-xref">Figure&nbsp;<span>5.4</span></a>.</p>
+<div id="fig-trace-determinant-diagram" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-trace-determinant-diagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/fig-stability-diagram.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-trace-determinant-diagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.4: Stability of equilibria based on the trace and determinant of the Jacobian matrix
+</figcaption>
+</figure>
+</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-holling1959" class="csl-entry" role="listitem">
+Holling, Crawford S. 1959. <span>“Some Characteristics of Simple Types of Predation and Parasitism.”</span> <em>The Canadian Entomologist</em> 91 (07): 385–98.
+</div>
+<div id="ref-Logan2006ode" class="csl-entry" role="listitem">
+Logan, David. 2006. <em>A First Course in Differential Equations</em>. Springer.
+</div>
+<div id="ref-turchin2003" class="csl-entry" role="listitem">
+Turchin, Peter. 2003. <em>Complex Population Dynamics: A Theoretical/Empirical Synthesis</em>. Vol. 35. Princeton University Press. <a href="https://unb.on.worldcat.org/oclc/828302490">https://unb.on.worldcat.org/oclc/828302490</a>.
+</div>
+</div>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./02-lab-SDE.html" class="pagination-link" aria-label="The stochastic difference equations and analogous deterministic equations">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">The stochastic difference equations and analogous deterministic equations</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
